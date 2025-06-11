@@ -1,0 +1,39 @@
+[
+    {
+      "name": "ChatGPT",
+      "url": "https://chat.openai.com",
+      "description": "OpenAI开发的大型语言模型，可以理解和生成人类语言，帮助用户回答问题、创作内容、编写代码等。",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg"
+    },
+    {
+      "name": "Midjourney",
+      "url": "https://www.midjourney.com",
+      "description": "基于AI的图像生成工具，可以根据文本描述创建高质量的艺术图像和概念设计。",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Midjourney_Emblem.png"
+    },
+    {
+      "name": "Claude",
+      "url": "https://claude.ai",
+      "description": "Anthropic开发的对话AI助手，擅长自然对话、文本分析和内容创作，注重安全性和有用性。",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/1/10/Claude_Wordmark.svg"
+    },
+    {
+      "name": "DALL-E",
+      "url": "https://openai.com/dall-e",
+      "description": "OpenAI开发的AI图像生成系统，可以根据文本描述创建高度逼真和创意的图像。",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/a/a1/DALL-E_Preview.svg"
+    },
+    {
+      "name": "Stable Diffusion",
+      "url": "https://stability.ai",
+      "description": "开源的AI图像生成模型，可以创建高质量的艺术图像，支持自定义模型训练。",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Logo_Stable_Diffusion.svg"
+    },
+    {
+      "name": "Hugging Face",
+      "url": "https://huggingface.co",
+      "description": "AI研究和开发平台，提供数千个开源模型和数据集，支持自然语言处理、计算机视觉等应用。",
+      "logo": "https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg"
+    }
+  ]
+  

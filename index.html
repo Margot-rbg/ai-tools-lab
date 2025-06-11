@@ -5,16 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的AI工具实验室</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50">
-    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 shadow-md">
-        <h1 class="text-2xl font-bold text-center">我的AI工具实验室</h1>
-    </header>
-    <main class="container mx-auto py-8 px-4">
-        <div id="tool-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+    
+    <style>
+        body {
+            /* 这是一个非常淡的蓝白色作为底色 */
+            background-color: #f8faff; 
             
-        </div>
-    </main>
+            /* 这是渐变的核心代码 */
+            background-image: 
+                /* 右上角的一个淡紫色光晕 */
+                radial-gradient(circle at 90% 10%, rgba(204, 185, 255, 0.3) 0%, transparent 40%),
+                
+                /* 左下角的一个淡蓝色光晕 */
+                radial-gradient(circle at 10% 90%, rgba(191, 219, 254, 0.4) 0%, transparent 40%);
+            
+            /* 让渐变背景固定，不随滚动条滚动 */
+            background-attachment: fixed; 
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white shadow-lg flex-shrink-0">
+            <div class="p-6 text-2xl font-bold text-blue-600">
+                AI工具集
+            </div>
+            <nav id="sidebar-nav" class="p-4"></nav>
+        </aside>
+
+        <main class="flex-grow p-6 md:p-8 lg:p-10 overflow-y-auto">
+            
+            <header class="flex justify-end items-center mb-8">
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600">关于我们</a>
+                    <a href="#" class="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg">提交工具</a>
+                </div>
+            </header>
+            
+            <div class="text-center mb-10">
+                <h1 id="main-content-title" class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">AI 工具集</h1>
+                <p class="mt-4 text-lg text-gray-600">一个精选AI工具的导航和实践项目</p>
+            </div>
+
+            <div class="max-w-2xl mx-auto mb-10">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+                    </div>
+                    <input type="search" id="search-input" class="block w-full pl-12 pr-3 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:bg-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-base" placeholder="搜索海量AI工具...">
+                </div>
+            </div>
+
+            <div class="flex justify-center border-b border-gray-200 mb-8">
+                <a href="#" class="px-4 py-2 text-blue-600 border-b-2 border-blue-600 font-semibold">常用</a>
+                <a href="#" class="px-4 py-2 text-gray-500 hover:text-blue-600">探索</a>
+                <a href="#" class="px-4 py-2 text-gray-500 hover:text-blue-600">社区</a>
+                <a href="#" class="px-4 py-2 text-gray-500 hover:text-blue-600">图片</a>
+                <a href="#" class="px-4 py-2 text-gray-500 hover:text-blue-600">生活</a>
+            </div>
+
+            <div id="tool-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                </div>
+        </main>
+    </div>
 
     <script src="app.js"></script>
 </body>

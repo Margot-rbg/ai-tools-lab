@@ -1,14 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- 1. 定义全局变量 (部分选择器已更新) ---
+
+    // --- 1. 定义全局变量 ---
     const toolContainer = document.getElementById('tool-container');
     const sidebarNavContainer = document.getElementById('sidebar-nav');
     const searchInput = document.getElementById('search-input');
     const mainContentTitle = document.getElementById('main-content-title');
+    const tabFiltersContainer = document.getElementById('tab-filters'); // 新增
 
-    let allTools = []; 
+    let allTools = [];
     let activeCategory = '全部';
-    let searchTerm = ''; 
+    let activeSubCategory = '常用'; // 新增
+    let searchTerm = '';
 
     // --- 图标数据 ---
     const categoryIcons = {
@@ -19,13 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
         '全部': `<svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>`,
         '默认': `<svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>`
     };
-    
-    // 新增！定义哪些分类需要显示'>'箭头
-    const categoriesWithSubmenu = ['AI绘画', 'AI办公工具', 'AI音频工具']; // 你可以根据你的分类自行增删
+    const categoriesWithSubmenu = ['AI绘画', 'AI办公工具', 'AI音频工具'];
 
-    // --- 渲染工具卡片的函数 (不变) ---
+    // --- 2. 渲染工具卡片的函数 ---
     const renderTools = (tools) => {
-        // ... 这部分函数内容和之前完全一样，无需改动 ...
         toolContainer.innerHTML = '';
         if (tools.length === 0) {
             toolContainer.innerHTML = `<p class="text-gray-500 text-center col-span-full">未找到相关的AI工具。</p>`;
@@ -38,51 +37,57 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- 统一的筛选和渲染函数 (不变) ---
+    // --- 3. 核心！统一的筛选和渲染函数 ---
     const filterAndRender = () => {
-        // ... 这部分函数内容和之前完全一样，无需改动 ...
         let filteredTools = allTools;
+
         if (activeCategory !== '全部') {
             filteredTools = filteredTools.filter(tool => tool.category === activeCategory);
         }
+        
+        if (activeSubCategory !== '全部') { // '全部' can be a virtual subcategory
+            filteredTools = filteredTools.filter(tool => tool.subCategory === activeSubCategory);
+        }
+
         if (searchTerm) {
             const lowerCaseSearchTerm = searchTerm.toLowerCase();
-            filteredTools = filteredTools.filter(tool => tool.name.toLowerCase().includes(lowerCaseSearchTerm) || tool.description.toLowerCase().includes(lowerCaseSearchTerm) || tool.tags.some(tag => tag.toLowerCase().includes(lowerCaseSearchTerm)));
+            filteredTools = filteredTools.filter(tool =>
+                tool.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+                tool.description.toLowerCase().includes(lowerCaseSearchTerm) ||
+                tool.tags.some(tag => tag.toLowerCase().includes(lowerCaseSearchTerm))
+            );
         }
-        mainContentTitle.textContent = activeCategory; 
+
+        mainContentTitle.textContent = activeCategory === '全部' ? activeSubCategory : `${activeCategory} - ${activeSubCategory}`;
         renderTools(filteredTools);
     };
 
-    // --- 设置侧边栏导航链接的函数 (重大修改) ---
+    // --- 4. 设置侧边栏导航链接的函数 ---
     const setupSidebarNav = () => {
         const categories = ['全部', ...new Set(allTools.map(tool => tool.category))];
-        
         sidebarNavContainer.innerHTML = '';
         categories.forEach(category => {
             const link = document.createElement('a');
             link.href = '#';
-            link.dataset.category = category; 
-            
-            // 新的侧边栏链接样式
+            link.dataset.category = category;
             link.className = 'sidebar-link flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200';
             
             const iconHTML = categoryIcons[category] || categoryIcons['默认'];
             let linkContent = `<div class="flex items-center">${iconHTML}<span>${category}</span></div>`;
 
-            // 如果当前分类需要显示箭头，则添加箭头图标
             if (categoriesWithSubmenu.includes(category)) {
                 linkContent += `<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
             }
-
             link.innerHTML = linkContent;
-            
+
             if (category === activeCategory) {
                 link.classList.add('bg-blue-100', 'text-blue-700', 'font-semibold');
             }
 
             link.addEventListener('click', (e) => {
-                e.preventDefault(); 
+                e.preventDefault();
                 activeCategory = category;
+                activeSubCategory = '常用';
                 searchInput.value = '';
                 searchTerm = '';
 
@@ -91,28 +96,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 link.classList.add('bg-blue-100', 'text-blue-700', 'font-semibold');
 
+                setupTabFilters(); // Update active state for tabs
                 filterAndRender();
             });
 
             sidebarNavContainer.appendChild(link);
         });
     };
-    
-    // --- 设置搜索框的事件监听 (不变) ---
+
+    // --- 5. 新增！设置顶部标签筛选的函数 ---
+    const setupTabFilters = () => {
+        const tabLinks = tabFiltersContainer.querySelectorAll('.tab-filter');
+        tabLinks.forEach(link => {
+            link.classList.remove('text-blue-600', 'border-b-2', 'border-blue-600', 'font-semibold');
+            link.classList.add('text-gray-500', 'hover:text-blue-600');
+            link.style.borderBottom = '2px solid transparent'; // Reset border
+
+            if (link.dataset.filter === activeSubCategory) {
+                link.classList.add('text-blue-600', 'border-blue-600', 'font-semibold');
+                link.classList.remove('text-gray-500');
+            }
+
+            if (!link.dataset.listenerAttached) {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    activeSubCategory = link.dataset.filter;
+                    filterAndRender();
+                    
+                    // Update styles after click
+                    tabLinks.forEach(l => {
+                        l.classList.remove('text-blue-600', 'border-b-2', 'border-blue-600', 'font-semibold');
+                        l.classList.add('text-gray-500', 'hover:text-blue-600');
+                    });
+                    link.classList.add('text-blue-600', 'border-b-2', 'border-blue-600', 'font-semibold');
+                    link.classList.remove('text-gray-500');
+                });
+                link.dataset.listenerAttached = 'true';
+            }
+        });
+    };
+
+    // --- 6. 设置搜索框的事件监听 ---
     const setupSearch = () => {
-        // ... 这部分函数内容和之前完全一样，无需改动 ...
         searchInput.addEventListener('input', (event) => {
             searchTerm = event.target.value.trim();
             filterAndRender();
         });
     };
 
-    // --- 初始加载数据 ---
+    // --- 7. 初始加载数据 ---
     fetch('data.json')
         .then(response => response.json())
         .then(data => {
             allTools = data;
-            setupSidebarNav(); 
+            setupSidebarNav();
+            setupTabFilters();
             setupSearch();
             filterAndRender();
         })

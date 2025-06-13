@@ -3,31 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的AI工具实验室</title>
+    <title>AI 甄选</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
         body {
-            /* 这是一个非常淡的蓝白色作为底色 */
             background-color: #f8faff; 
-            
-            /* 这是渐变的核心代码 */
             background-image: 
-                /* 右上角的一个淡紫色光晕 */
-                radial-gradient(circle at 90% 10%, rgba(204, 185, 255, 0.3) 0%, transparent 40%),
-                
-                /* 左下角的一个淡蓝色光晕 */
-                radial-gradient(circle at 10% 90%, rgba(191, 219, 254, 0.4) 0%, transparent 40%);
-            
-            /* 让渐变背景固定，不随滚动条滚动 */
+                radial-gradient(circle at 90% 10%, rgba(204, 185, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 10% 90%, rgba(191, 219, 254, 0.4) 0%, transparent 50%);
             background-attachment: fixed; 
         }
     </style>
 </head>
+
 <body class="bg-white">
 
     <aside id="mobile-sidebar" class="fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden">
-        <div class="p-6 text-2xl font-bold text-blue-600">AI 甄选</div>
+        <div class="p-6 text-2xl font-bold text-blue-600">AI Tools</div>
         <nav id="sidebar-nav-mobile" class="p-4"></nav>
     </aside>
 
@@ -35,7 +28,7 @@
 
     <div class="flex h-screen">
         <aside class="w-64 bg-white shadow-lg flex-shrink-0 hidden lg:flex lg:flex-col">
-            <div class="p-6 text-2xl font-bold text-blue-600">AI 甄选</div>
+            <div class="p-6 text-2xl font-bold text-blue-600">AI Tools</div>
             <nav id="sidebar-nav-desktop" class="p-4"></nav>
         </aside>
 
@@ -58,6 +51,12 @@
 
             <main class="flex-grow p-4 md:p-8 overflow-y-auto">
                 <h1 id="main-content-title" class="text-3xl font-bold text-gray-900 mb-4">全部 - 常用</h1>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
+                    <a href="#" class="md:col-span-2 bg-blue-100 rounded-lg p-6 flex items-center justify-center text-xl font-bold text-blue-800 hover:opacity-90">每日AI快讯</a>
+                    <a href="#" class="bg-green-100 rounded-lg p-6 flex items-center justify-center text-xl font-bold text-green-800 hover:opacity-90">AI交流群</a>
+                    <a href="#" class="bg-yellow-100 rounded-lg p-6 flex items-center justify-center text-xl font-bold text-yellow-800 hover:opacity-90">AI教程&玩法</a>
+                </div>
                 
                 <div id="tab-filters" class="flex items-center border-b border-gray-200 mb-8">
                     </div>
@@ -69,5 +68,4 @@
     </div>
     <script src="app.js"></script>
 </body>
-
 </html>

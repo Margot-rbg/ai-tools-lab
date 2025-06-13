@@ -24,53 +24,50 @@
         }
     </style>
 </head>
-
 <body class="bg-white">
 
+    <aside id="mobile-sidebar" class="fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden">
+        <div class="p-6 text-2xl font-bold text-blue-600">AI 甄选</div>
+        <nav id="sidebar-nav-mobile" class="p-4"></nav>
+    </aside>
+
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
+
     <div class="flex h-screen">
-        <aside class="w-64 bg-white shadow-lg flex-shrink-0">
-            <div class="p-6 text-2xl font-bold text-blue-600">
-                ToolVerse
-            </div>
-            <nav id="sidebar-nav" class="p-4"></nav>
+        <aside class="w-64 bg-white shadow-lg flex-shrink-0 hidden lg:flex lg:flex-col">
+            <div class="p-6 text-2xl font-bold text-blue-600">AI 甄选</div>
+            <nav id="sidebar-nav-desktop" class="p-4"></nav>
         </aside>
 
-        <main class="flex-grow p-6 md:p-8 lg:p-10 overflow-y-auto">
+        <div class="flex-grow flex flex-col">
             
-            <header class="flex justify-end items-center mb-8">
-                <div class="flex items-center space-x-4">
+            <header class="bg-white/80 backdrop-blur-sm shadow-sm p-4 flex justify-between items-center z-10 border-b border-gray-200">
+                <button id="menu-toggle-btn" class="p-2 rounded-md text-gray-700 hover:bg-gray-100 lg:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                 <div class="hidden lg:flex items-center space-x-6">
+                    <a href="#" class="text-sm font-semibold text-blue-600">AI工具集</a>
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600">AI应用</a>
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600">每日AI快讯</a>
+                </div>
+                <div class="flex items-center space-x-4 ml-auto">
                     <a href="#" class="text-sm text-gray-600 hover:text-blue-600">关于我们</a>
                     <a href="#" class="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg">提交工具</a>
                 </div>
             </header>
-            
-            <div class="text-center mb-10">
-                <p class="text-lg font-semibold text-blue-600 mb-2">MARGOTX.COM</p>
-                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">ToolVerse</h1>
-            </div>
 
-            <div class="max-w-2xl mx-auto mb-10">
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+            <main class="flex-grow p-4 md:p-8 overflow-y-auto">
+                <h1 id="main-content-title" class="text-3xl font-bold text-gray-900 mb-4">全部 - 常用</h1>
+                
+                <div id="tab-filters" class="flex items-center border-b border-gray-200 mb-8">
                     </div>
-                    <input type="search" id="search-input" class="block w-full pl-12 pr-3 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:bg-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-base" placeholder="搜索海量AI工具...">
-                </div>
-            </div>
 
-            <div id="tab-filters" class="flex justify-center border-b border-gray-200 mb-8">
-                <a href="#" class="tab-filter px-4 py-2 text-blue-600 border-b-2 border-blue-600 font-semibold" data-filter="常用">常用</a>
-                <a href="#" class="tab-filter px-4 py-2 text-gray-500 hover:text-blue-600" data-filter="探索">探索</a>
-                <a href="#" class="tab-filter px-4 py-2 text-gray-500 hover:text-blue-600" data-filter="社区">社区</a>
-                <a href="#" class="tab-filter px-4 py-2 text-gray-500 hover:text-blue-600" data-filter="图片">图片</a>
-                <a href="#" class="tab-filter px-4 py-2 text-gray-500 hover:text-blue-600" data-filter="生活">生活</a>
-            </div>
-
-            <div id="tool-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-                </div>
-        </main>
+                <div id="tool-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    </div>
+            </main>
+        </div>
     </div>
-
     <script src="app.js"></script>
 </body>
+
 </html>

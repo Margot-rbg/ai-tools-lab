@@ -1,65 +1,182 @@
 [
-    {
-      "name": "ChatGPT",
-      "url": "https://chat.openai.com",
-      "description": "OpenAI开发的大型语言模型，可以理解和生成人类语言，帮助用户回答问题、创作内容、编写代码等。",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
-      "category": "AI写作",
-      "tags": ["官方", "免费", "对话"] 
-    },
-    {
-      "name": "Midjourney",
-      "url": "https://www.midjourney.com",
-      "description": "基于AI的图像生成工具，可以根据文本描述创建高质量的艺术图像和概念设计。",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Midjourney_Emblem.png",
-      "category": "AI绘画",
-      "tags": ["高质量", "付费", "Discord"]
-    },
-    {
-      "name": "Claude",
-      "url": "https://claude.ai",
-      "description": "Anthropic开发的对话AI助手，擅长自然对话、文本分析和内容创作，注重安全性和有用性。",
-      "logo": "https://articles-img.sftcdn.net/t_article_cover_xl/auto-mapping-folder/sites/2/2024/10/Claude.jpg",
-      "category": "AI写作",
-      "subCategory": "常用",
-      "tags": ["官方", "免费", "对话"] 
-    },
-    {
-      "name": "DALL-E",
-      "url": "https://openai.com/dall-e",
-      "description": "OpenAI开发的AI图像生成系统，可以根据文本描述创建高度逼真和创意的图像。",
-      "logo": "https://mspoweruser.com/wp-content/uploads/2023/09/dall-e-3-in-chatgpt.png",
-      "category": "AI绘画",
-      "subCategory": "常用",
-      "tags": ["高质量", "付费", "Discord"]
-    
-    },
-    {
-      "name": "Stable Diffusion",
-      "url": "https://stability.ai",
-      "description": "开源的AI图像生成模型，可以创建高质量的艺术图像，支持自定义模型训练。",
-      "logo": "https://miro.medium.com/v2/resize:fit:1358/1*Rbq9cDCJpGq7HKeNAeIitg.jpeg",
-      "category": "AI绘画",
-      "subCategory": "探索",
-      "tags": ["开源", "免费", "Discord"] 
-    },
-    {
-      "name": "Hugging Face",
-      "url": "https://huggingface.co",
-      "description": "AI研究和开发平台，提供数千个开源模型和数据集，支持自然语言处理、计算机视觉等应用。",
-      "logo": "https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg",  
-      "category": "AI编程",
-      "subCategory": "探索",
-      "tags": ["开源", "免费", "Discord"]
-    },
-    {
-      "name": "Pika",
-      "url": "https://pika.art/",
-      "description": "一个强大的AI视频生成和编辑平台。",
-      "logo": "https://th.bing.com/th/id/R.f3a76d4f3db506aede3a7f17cb666fec?rik=XWrZyBnz2%2fGFwA&riu=http%3a%2f%2fiaboxtool.es%2fwp-content%2fuploads%2f2023%2f10%2fe94c6b5d6b0975bbd31bb61c072af054.webp&ehk=TtIDJUlOnaPEENg1aik8n4s1n%2fV2zRpqT5uJKxBpeiM%3d&risl=&pid=ImgRaw&r=0",
-      "category": "AI视频",
-      "subCategory": "探索",
-      "tags": ["热门", "免费增值"]
-    }
-  ]
-  
+  {
+    "name": "ChatGPT",
+    "url": "https://chat.openai.com",
+    "description": "由OpenAI开发的功能强大的通用对话模型，可用于内容创作、编码辅助、回答问题等。",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
+    "category": "AI写作",
+    "subCategory": "常用",
+    "tags": ["官方", "免费增值", "对话"]
+  },
+  {
+    "name": "Midjourney",
+    "url": "https://www.midjourney.com",
+    "description": "顶级的AI图像生成器，通过文本提示创造出具有高度艺术性和细节的图片。",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Midjourney_Emblem.png",
+    "category": "AI绘画",
+    "subCategory": "常用",
+    "tags": ["高质量", "付费", "Discord"]
+  },
+  {
+    "name": "Claude 3.5 Sonnet",
+    "url": "https://claude.ai",
+    "description": "Anthropic开发的最新模型，在推理、编码和视觉方面表现出色，以高情商和安全性著称。",
+    "logo": "https://pbs.twimg.com/profile_images/1719827366935121920/39p4j2v1_400x400.jpg",
+    "category": "AI写作",
+    "subCategory": "常用",
+    "tags": ["官方", "免费增值", "对话"]
+  },
+  {
+    "name": "Stable Diffusion 3",
+    "url": "https://stability.ai",
+    "description": "领先的开源文生图模型，图像质量和文本理解能力优秀，可供开发者自由部署和微调。",
+    "logo": "https://images.squarespace-cdn.com/content/v1/6213c340453c3f502425776e/bca47539-f43b-4339-9630-4c32b95f233f/stablediffusion.png",
+    "category": "AI绘画",
+    "subCategory": "探索",
+    "tags": ["开源", "免费", "技术"]
+  },
+  {
+    "name": "Runway Gen-3",
+    "url": "https://runwayml.com",
+    "description": "专业的AI视频生成和编辑平台，提供文生视频、图生视频、视频到视频等多种强大功能。",
+    "logo": "https://pbs.twimg.com/profile_images/1754988636264075264/j8l-q3gE_400x400.jpg",
+    "category": "AI视频",
+    "subCategory": "常用",
+    "tags": ["视频生成", "专业", "付费"]
+  },
+  {
+    "name": "Pika",
+    "url": "https://pika.art",
+    "description": "易于上手的AI视频生成工具，因其出色的动态效果和创造力而广受欢迎。",
+    "logo": "https://pbs.twimg.com/profile_images/1779958720138944512/6j24qt2T_400x400.jpg",
+    "category": "AI视频",
+    "subCategory": "探索",
+    "tags": ["热门", "免费增值"]
+  },
+  {
+    "name": "GitHub Copilot",
+    "url": "https://github.com/features/copilot",
+    "description": "由GitHub和OpenAI共同开发的AI编程助手，可以在IDE中实时提供代码建议和自动补全。",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/GitHub_Copilot_logo.svg/1200px-GitHub_Copilot_logo.svg.png",
+    "category": "AI编程",
+    "subCategory": "常用",
+    "tags": ["官方", "付费", "效率"]
+  },
+  {
+    "name": "ElevenLabs",
+    "url": "https://elevenlabs.io",
+    "description": "提供非常逼真和富有情感的AI语音合成(TTS)和声音克隆服务。",
+    "logo": "https://pbs.twimg.com/profile_images/1633190882333224961/iJ5sVn0K_400x400.jpg",
+    "category": "AI音频",
+    "subCategory": "专业",
+    "tags": ["语音合成", "付费", "高质量"]
+  },
+  {
+    "name": "Notion AI",
+    "url": "https://www.notion.so/product/ai",
+    "description": "集成在Notion笔记应用中的AI助手，可以帮助用户总结、写作、翻译和头脑风暴。",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png",
+    "category": "AI写作",
+    "subCategory": "常用",
+    "tags": ["笔记", "效率", "集成"]
+  },
+  {
+    "name": "Gamma",
+    "url": "https://gamma.app",
+    "description": "使用AI快速生成精美演示文稿(PPT)、文档和网页，极大提升内容创作效率。",
+    "logo": "https://img.business.com/w/700/aHR0cHM6Ly93d3cuYnVzaW5lc3MuY29tL2Fzc2V0cy9jb250ZW50LzVjYjBlN2I5NzdkZjYxNTY3Yzg1YjU3Mi8xNjc5MzA4OTI1OTYxLnBuZw==",
+    "category": "AI办公",
+    "subCategory": "常用",
+    "tags": ["PPT", "免费增值", "自动化"]
+  },
+  {
+    "name": "Perplexity AI",
+    "url": "https://www.perplexity.ai",
+    "description": "一个对话式AI搜索引擎，它能提供带有引用来源的、总结性的答案。",
+    "logo": "https://pbs.twimg.com/profile_images/17PerplexityAI_logo_400x400.png",
+    "category": "AI搜索",
+    "subCategory": "探索",
+    "tags": ["搜索引擎", "免费增值", "信息获取"]
+  },
+  {
+    "name": "Hugging Face",
+    "url": "https://huggingface.co",
+    "description": "全球最大的AI模型和数据集共享社区，是AI开发者和研究人员的宝库。",
+    "logo": "https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg",
+    "category": "AI平台",
+    "subCategory": "专业",
+    "tags": ["开源", "社区", "开发者"]
+  },
+  {
+    "name": "Suno AI",
+    "url": "https://suno.com/",
+    "description": "领先的AI音乐和歌曲生成工具，可以根据文本提示创作出包含人声和伴奏的完整歌曲。",
+    "logo": "https://pbs.twimg.com/profile_images/1770853326153924608/r0R5K2Yy_400x400.jpg",
+    "category": "AI音频",
+    "subCategory": "探索",
+    "tags": ["音乐生成", "免费增值", "创意"]
+  },
+  {
+    "name": "Kimi Chat",
+    "url": "https://kimi.moonshot.cn/",
+    "description": "由月之暗面开发的国产大模型，以其超长的上下文窗口（可达200万字）处理能力而闻名。",
+    "logo": "https://static.fromweb.lingdaima.com/image/20240319/2d8f9c18-97fb-48e0-a5ad-c189b33a55cf.png",
+    "category": "AI写作",
+    "subCategory": "常用",
+    "tags": ["国产", "长文本", "免费"]
+  },
+  {
+    "name": "Cursor",
+    "url": "https://cursor.sh",
+    "description": "一个为AI辅助编程而生的代码编辑器，深度集成了强大的AI功能，能极大提升开发效率。",
+    "logo": "https://pbs.twimg.com/profile_images/1683537230498750464/vS2540fe_400x400.jpg",
+    "category": "AI编程",
+    "subCategory": "探索",
+    "tags": ["开发者工具", "免费增值", "编辑器"]
+  },
+  {
+    "name": "Tome",
+    "url": "https://tome.app",
+    "description": "AI驱动的叙事和演示文稿创作平台，帮助用户快速将想法转化为视觉故事。",
+    "logo": "https://assets-global.website-files.com/6257adef93867e50d84d30e2/6257adef93867e59a24d3141_tome-logo.png",
+    "category": "AI办公",
+    "subCategory": "常用",
+    "tags": ["PPT", "免费增值", "故事化"]
+  },
+  {
+    "name": "Phind",
+    "url": "https://www.phind.com",
+    "description": "一个专门为开发者设计的AI搜索引擎，能提供精准的代码示例和技术解答。",
+    "logo": "https://pbs.twimg.com/profile_images/1659557335645945856/G5_p5aL9_400x400.jpg",
+    "category": "AI编程",
+    "subCategory": "专业",
+    "tags": ["搜索引擎", "开发者", "免费"]
+  },
+  {
+    "name": "Luma AI Dream Machine",
+    "url": "https://lumalabs.ai/dream-machine",
+    "description": "近期发布的超现实高质量AI视频生成模型，以其流畅性和物理一致性受到广泛关注。",
+    "logo": "https://pbs.twimg.com/profile_images/1749591490924449793/vVDEhD3j_400x400.jpg",
+    "category": "AI视频",
+    "subCategory": "探索",
+    "tags": ["热门", "免费", "高质量"]
+  },
+  {
+    "name": "HeyGen",
+    "url": "https://www.heygen.com",
+    "description": "专业的AI数字人与视频翻译平台，可以快速创建虚拟形象视频并进行多语言配音。",
+    "logo": "https://pbs.twimg.com/profile_images/1699849292527824896/xR5nBGo1_400x400.png",
+    "category": "AI视频",
+    "subCategory": "专业",
+    "tags": ["数字人", "付费", "营销"]
+  },
+  {
+    "name": "Copy.ai",
+    "url": "https://www.copy.ai",
+    "description": "一个专注于营销文案生成的AI写作平台，提供多种模板用于创作广告、博客和社交媒体内容。",
+    "logo": "https://pbs.twimg.com/profile_images/1679502932971200512/2D1K5D4M_400x400.jpg",
+    "category": "AI写作",
+    "subCategory": "专业",
+    "tags": ["营销文案", "付费", "自动化"]
+  }
+]

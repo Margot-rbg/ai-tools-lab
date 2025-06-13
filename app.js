@@ -152,18 +152,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- 初始加载数据 ---
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            allTools = data;
-            setupSidebarNav();
-            setupTabFilters(); // 初始化顶部标签功能
-            setupSearch();
-            filterAndRender();
-        })
-        .catch(error => {
-            console.error('加载数据时出错:', error);
-            toolContainer.innerHTML = `<p class="text-red-500 text-center col-span-full">${error.message}</p>`;
+    // --- 7. 初始加载数据 (从Airtable加载) ---
+
+    // ！！！请将下面的占位符替换成你自己的信息！！！
+    const AIRTABLE_API_KEY = 'patcjApmsHOknSs3e.3c7cefca28e6b8f31b73b0c07b02d59718a0ef577085ae6f61a365cf9670e199'; // 粘贴你自己的API Key
+    const AIRTABLE_BASE_ID = 'appFgytRmxSpFbdJf'; // 粘贴你自己的Base ID
+    const AIRTABLE_TABLE_NAME = 'AI工具集'; // 你的表名
+
+    // 构建Airtable API的URL
+    const airtableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
+
+    // 使用fetch从Airtable获取数据
+    fetch(airtableUrl, {
+        headers: {
+            // 在请求头中加入身份认证信息
+            'Authorization': `Bearer ${AIRTABLE_API_KEY}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Airtable返回的数据结构和我们之前的不一样，需要转换一下
+        const transformedTools = data.records.map(record => {
+            // 确保字段存在，避免出错
+            const fields = record.fields;
+            return {
+                id: record.id, // Airtable为每条记录生成的唯一ID
+                name: fields.name || '',
+                url: fields.url || '#',
+                description: fields.description || '',
+                // Airtable的附件字段是一个数组，我们只取第一个图片的URL
+                logo: (fields.logo && fields.logo[0]) ? fields.logo[0].url : '',
+                category: fields.category || '未分类',
+                subCategory: fields.subCategory || '常用',
+                tags: fields.tags || [] // 确保tags是一个数组
+            };
         });
+
+        // 后续逻辑和之前完全一样，无缝衔接
+        allTools = transformedTools;
+        setupSidebarNav();
+        setupTabFilters();
+        setupSearch();
+        filterAndRender();
+    })
+    .catch(error => {
+        console.error('从Airtable加载数据时出错:', error);
+        toolContainer.innerHTML = `<p class="text-red-500 text-center col-span-full">加载云端数据失败，请检查API设置或网络连接。</p>`;
+    });
 });

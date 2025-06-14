@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日AI快讯 - AI 甄选</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        body {
+            background-color: #f8faff; 
+            background-image: 
+                radial-gradient(circle at 90% 10%, rgba(204, 185, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 10% 90%, rgba(191, 219, 254, 0.4) 0%, transparent 50%);
+            background-attachment: fixed; 
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    <div class="flex flex-col min-h-screen">
+        <header class="bg-white/80 backdrop-blur-sm shadow-sm p-4 flex justify-between items-center z-10 border-b border-gray-200">
+            <a href="index.html" class="flex items-center">
+                <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                <span class="text-xl font-bold text-blue-600">返回首页</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="text-sm text-gray-600 hover:text-blue-600">关于我们</a>
+            </div>
+        </header>
+
+        <main class="flex-grow p-4 md:p-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">每日AI快讯</h1>
+            <p class="text-gray-600 mb-8">这里汇集了最新的AI行业动态、产品更新和技术突破</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 新闻项目 -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-1 rounded-full">产品更新</span>
+                        <span class="text-sm text-gray-500">2024年11月15日</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">OpenAI 发布 GPT-5 模型</h2>
+                    <p class="text-gray-600 mb-4">OpenAI 今日宣布发布其最新的大型语言模型 GPT-5，在推理、编程和多模态能力上有显著提升。新模型可以处理更复杂的指令，生成更高质量的代码，并能更好地理解和生成图像内容。</p>
+                    <a href="#" class="text-blue-600 hover:underline">阅读更多 →</a>
+                </div>
+                
+                <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-1 rounded-full">行业动态</span>
+                        <span class="text-sm text-gray-500">2024年11月14日</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">谷歌推出新一代 AI 搜索体验</h2>
+                    <p class="text-gray-600 mb-4">谷歌宣布其搜索引擎将全面整合 AI 功能，提供更加个性化和直接的搜索结果。新功能包括自然语言问答、多模态搜索和实时信息综合，旨在改变人们获取信息的方式。</p>
+                    <a href="#" class="text-blue-600 hover:underline">阅读更多 →</a>
+                </div>
+                
+                <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-1 rounded-full">技术突破</span>
+                        <span class="text-sm text-gray-500">2024年11月13日</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">研究人员开发出能理解情感的AI模型</h2>
+                    <p class="text-gray-600 mb-4">一组来自斯坦福大学的研究人员宣布开发出一种新型AI模型，能够更准确地理解和回应人类情感。这项突破可能对心理健康应用、客户服务和社交机器人产生重大影响。</p>
+                    <a href="#" class="text-blue-600 hover:underline">阅读更多 →</a>
+                </div>
+                
+                <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-1 rounded-full">应用案例</span>
+                        <span class="text-sm text-gray-500">2024年11月12日</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">AI在医疗诊断领域取得重大进展</h2>
+                    <p class="text-gray-600 mb-4">一项新研究表明，基于深度学习的AI系统在诊断某些类型的癌症方面已经超过了人类专家。这一进展有望提高早期诊断率，改善患者预后。</p>
+                    <a href="#" class="text-blue-600 hover:underline">阅读更多 →</a>
+                </div>
+                
+                <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-1 rounded-full">政策法规</span>
+                        <span class="text-sm text-gray-500">2024年11月11日</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">欧盟通过新的AI监管框架</h2>
+                    <p class="text-gray-600 mb-4">欧盟委员会正式通过了一项全面的AI监管框架，旨在确保AI技术的安全、透明和负责任使用。新规定将对高风险AI应用实施严格的要求，同时促进创新和竞争。</p>
+                    <a href="#" class="text-blue-600 hover:underline">阅读更多 →</a>
+                </div>
+                
+                <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-1 rounded-full">产品更新</span>
+                        <span class="text-sm text-gray-500">2024年11月10日</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">Anthropic 推出 Claude 3.5 Opus</h2>
+                    <p class="text-gray-600 mb-4">Anthropic 发布了其最强大的AI助手 Claude 3.5 Opus，在推理、编码和创意写作方面表现出色。新版本还增加了更长的上下文窗口和更好的工具使用能力。</p>
+                    <a href="#" class="text-blue-600 hover:underline">阅读更多 →</a>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">订阅AI快讯</h2>
+                <p class="text-gray-600 mb-6">每周收到最新的AI行业动态和技术更新，直接发送到您的邮箱</p>
+                <form class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="您的邮箱地址" class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">订阅</button>
+                </form>
+            </div>
+        </main>
+
+        <footer class="bg-white border-t border-gray-200 py-6 px-4 md:px-8">
+            <div class="text-center text-gray-500 text-sm">
+                <p>© 2024 AI 甄选. 保留所有权利.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html> 

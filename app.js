@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     console.log('app.js 脚本已开始运行！');
     // 1. 定义所有需要的HTML元素
@@ -59,15 +58,40 @@ document.addEventListener('DOMContentLoaded', () => {
             filteredTools = filteredTools.filter(tool => tool.subCategory === activeSubCategory);
         }
         if (searchTerm) {
-            filteredTools = filteredTools.filter(tool => tool.name.toLowerCase().includes(searchTerm) || tool.description.toLowerCase().includes(searchTerm));
+            filteredTools = filteredTools.filter(tool => 
+                tool.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                (tool.description && tool.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                (tool.tags && tool.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())))
+            );
         }
+        console.log(`筛选后的工具数量: ${filteredTools.length}, 分类: ${activeCategory}, 子分类: ${activeSubCategory}`);
         mainContentTitle.textContent = `${activeCategory} - ${activeSubCategory}`;
         renderTools(filteredTools);
     };
 
     // 5. 设置导航和交互
     const setupNavigations = () => {
-        const categories = ['全部', ...new Set(allTools.map(tool => tool.category).filter(Boolean))];
+        // 确保有数据后再设置导航
+        if (!allTools || allTools.length === 0) {
+            console.error("没有工具数据，无法设置导航");
+            return;
+        }
+        
+        // 从工具数据中提取所有分类
+        const categories = ['全部'];
+        const categorySet = new Set();
+        
+        allTools.forEach(tool => {
+            if (tool.category) {
+                categorySet.add(tool.category);
+            }
+        });
+        
+        // 将Set转换为数组并添加到categories
+        categories.push(...Array.from(categorySet));
+        
+        console.log("可用分类:", categories);
+        
         const subCategories = ['常用', '探索', '专业']; // 你可以自定义这里的子分类
 
         desktopSidebarContainer.innerHTML = '';
@@ -106,9 +130,10 @@ document.addEventListener('DOMContentLoaded', () => {
         link.innerHTML = innerHTML;
         link.addEventListener('click', (e) => {
             e.preventDefault();
+            console.log(`点击了分类: ${category}`);
             activeCategory = category;
             activeSubCategory = '常用';
-            searchInput.value = '';
+            if (searchInput) searchInput.value = '';
             searchTerm = '';
             updateSidebarActiveState();
             updateTabActiveState();
@@ -156,35 +181,88 @@ document.addEventListener('DOMContentLoaded', () => {
     menuToggleBtn.addEventListener('click', toggleMenu);
     sidebarBackdrop.addEventListener('click', toggleMenu);
 
-    // 6. 初始加载数据
-    // !!! 再次确认这里的API信息是你自己的 !!!
+    // 添加一个函数来加载本地数据
+    const loadLocalData = () => {
+        console.log("开始加载本地数据...");
+        fetch('data.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`本地数据加载失败: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("成功加载本地数据:", data);
+                allTools = data;
+                setupNavigations();
+                setupSearch();
+                filterAndRender();
+            })
+            .catch(error => {
+                console.error("加载本地数据出错:", error);
+                toolContainer.innerHTML = `<p class="text-red-500 text-center col-span-full py-10">加载数据失败: ${error.message}</p>`;
+            });
+    };
+
+    // --- 6. 初始加载数据 ---
+    // !!! 确保这里的API信息是你自己的 !!!
     const AIRTABLE_API_KEY = 'patDnnNXsZc7hyN9O.88db80fb185f95d817ae168f6f4d27a3eb1b4b11cb05f63ec861c641870ade3f';
     const AIRTABLE_BASE_ID = 'appFgytRmxSpFbdJf';
     const AIRTABLE_TABLE_NAME = '工具列表';
     const airtableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
     
+    // 先尝试从 Airtable 加载数据，如果失败则使用本地数据
     fetch(airtableUrl, { headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` } })
         .then(response => {
-            if (!response.ok) { throw new Error(`网络响应错误: ${response.statusText}`) }
+            console.log("第一步：网络响应检查...");
+            if (!response.ok) {
+                // 如果网络响应状态不为200-299，就抛出错误
+                throw new Error(`网络请求失败，状态码: ${response.status} ${response.statusText}`);
+            }
+            console.log("第一步：网络响应成功！状态码:", response.status);
             return response.json();
         })
         .then(data => {
-            console.log('成功从Airtable获取到数据！', data);
-            if (!data.records) { throw new Error("Airtable返回的数据格式不正确") }
-            allTools = data.records.map(record => {
+            console.log("第二步：成功将响应解析为JSON格式", data);
+
+            // 检查Airtable返回的数据结构是否正确
+            if (!data.records) {
+                throw new Error("Airtable返回的数据格式不正确，缺少 'records' 数组。");
+            }
+            console.log("第二步：数据结构检查通过，找到了 'records' 数组。");
+
+            // 转换数据
+            const transformedTools = data.records.map(record => {
                 const fields = record.fields;
+                // 确保即使某些字段为空，也不会导致整个程序崩溃
                 return {
-                    id: record.id, name: fields.name, url: fields.url, description: fields.description,
-                    logo: (fields.logo && fields.logo[0]) ? fields.logo[0].url : `https://www.google.com/s2/favicons?sz=64&domain_url=${fields.url}`,
-                    category: fields.category, subCategory: fields.subCategory, tags: fields.tags
+                    id: record.id, 
+                    name: fields.name || '（无名称）', 
+                    url: fields.url || '#',
+                    description: fields.description || '',
+                    logo: (fields.logo && fields.logo[0]) ? fields.logo[0].url : `https://www.google.com/s2/favicons?sz=64&domain_url=${fields.url || 'google.com'}`,
+                    category: fields.category, 
+                    subCategory: fields.subCategory, 
+                    tags: fields.tags
                 };
             });
-            setupNavigations(); 
+            console.log("第三步：数据转换成功！转换后的工具数量:", transformedTools.length);
+            allTools = transformedTools;
+            
+            // 依次执行后续函数
+            console.log("第四步：开始设置导航...");
+            setupNavigations();
+            console.log("第五步：开始设置搜索...");
             setupSearch();
+            console.log("第六步：开始最终渲染...");
             filterAndRender();
+            console.log("第七步：所有设置完成，页面应该已正确渲染！");
         })
         .catch(error => {
-            console.error('加载或处理数据时出错:', error);
-            toolContainer.innerHTML = `<p class="text-red-500 text-center col-span-full">加载云端数据失败，请检查API设置或网络连接，并查看Console中的详细错误。</p>`;
+            // 如果以上任何一步出错，都会在这里被捕获
+            console.error('【Airtable API错误】:', error);
+            console.log('尝试加载本地数据...');
+            loadLocalData();
         });
 });
+      

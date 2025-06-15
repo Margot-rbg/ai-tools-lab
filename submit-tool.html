@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提交AI工具 - AI 甄选</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        body {
+            background-color: #f8faff; 
+            background-image: 
+                radial-gradient(circle at 90% 10%, rgba(204, 185, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 10% 90%, rgba(191, 219, 254, 0.4) 0%, transparent 50%);
+            background-attachment: fixed; 
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    <div class="flex h-screen">
+        <div class="flex-grow flex flex-col">
+            <header class="bg-white/80 backdrop-blur-sm shadow-sm p-4 flex justify-between items-center z-10 border-b border-gray-200">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold text-blue-600">AI Tools</a>
+                    
+                    <!-- 搜索框 (桌面版) -->
+                    <div class="relative hidden md:block ml-4">
+                        <div class="flex items-center border border-gray-300 rounded-lg bg-white overflow-hidden">
+                            <div class="flex">
+                                <button id="search-dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2 px-4 text-sm font-medium text-gray-700 bg-gray-100 border-r border-gray-300 hover:bg-gray-200 focus:outline-none">
+                                    站内
+                                    <svg class="w-2.5 h-2.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <input type="search" id="search-input" class="block w-full p-2 text-sm text-gray-900 border-0 focus:outline-none focus:ring-0" placeholder="搜索AI工具和资讯...">
+                            <button type="submit" class="p-2 text-gray-500 hover:text-blue-600">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden lg:flex items-center space-x-6">
+                    <a href="index.html" class="text-sm text-gray-600 hover:text-blue-600">AI工具集</a>
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600">AI应用</a>
+                    <a href="news.html" class="text-sm text-gray-600 hover:text-blue-600">每日AI快讯</a>
+                </div>
+                <div class="flex items-center space-x-4 ml-auto">
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600">关于我们</a>
+                    <a href="submit-tool.html" class="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg">提交工具</a>
+                </div>
+            </header>
+
+            <main class="flex-grow p-4 md:p-8 overflow-y-auto">
+                <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-sm">
+                    <h1 class="text-2xl font-bold text-gray-900 mb-6">提交新的AI工具</h1>
+                    
+                    <form id="submit-tool-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="tool-name" class="block text-sm font-medium text-gray-700 mb-1">工具名称 *</label>
+                                <input type="text" id="tool-name" name="tool-name" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            
+                            <div>
+                                <label for="tool-url" class="block text-sm font-medium text-gray-700 mb-1">工具网址 *</label>
+                                <input type="url" id="tool-url" name="tool-url" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="tool-description" class="block text-sm font-medium text-gray-700 mb-1">工具描述 *</label>
+                            <textarea id="tool-description" name="tool-description" rows="4" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">请简要描述这个工具的功能、特点和用途，100-200字为宜</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="tool-category" class="block text-sm font-medium text-gray-700 mb-1">主分类 *</label>
+                                <select id="tool-category" name="tool-category" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">请选择分类</option>
+                                    <option value="AI写作">AI写作</option>
+                                    <option value="AI绘画">AI绘画</option>
+                                    <option value="AI视频">AI视频</option>
+                                    <option value="AI音频">AI音频</option>
+                                    <option value="AI编程">AI编程</option>
+                                    <option value="AI对话">AI对话</option>
+                                    <option value="AI搜索">AI搜索</option>
+                                    <option value="AI办公">AI办公</option>
+                                    <option value="AI营销">AI营销</option>
+                                    <option value="AI设计">AI设计</option>
+                                    <option value="AI平台">AI平台</option>
+                                    <option value="AI硬件">AI硬件</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="tool-subcategory" class="block text-sm font-medium text-gray-700 mb-1">子分类 *</label>
+                                <select id="tool-subcategory" name="tool-subcategory" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">请选择子分类</option>
+                                    <option value="常用">常用</option>
+                                    <option value="探索">探索</option>
+                                    <option value="专业">专业</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="tool-tags" class="block text-sm font-medium text-gray-700 mb-1">标签</label>
+                            <input type="text" id="tool-tags" name="tool-tags" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <p class="text-xs text-gray-500 mt-1">多个标签请用逗号分隔，例如：免费,开源,中文</p>
+                        </div>
+                        
+                        <div>
+                            <label for="tool-logo" class="block text-sm font-medium text-gray-700 mb-1">工具Logo URL</label>
+                            <input type="url" id="tool-logo" name="tool-logo" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <p class="text-xs text-gray-500 mt-1">请提供工具的logo图片链接，如果没有我们会自动获取</p>
+                        </div>
+                        
+                        <div>
+                            <label for="submitter-email" class="block text-sm font-medium text-gray-700 mb-1">您的邮箱 (可选)</label>
+                            <input type="email" id="submitter-email" name="submitter-email" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <p class="text-xs text-gray-500 mt-1">如果您希望收到审核结果通知，可以留下邮箱</p>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input id="terms-checkbox" name="terms-checkbox" type="checkbox" required class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                            <label for="terms-checkbox" class="ml-2 block text-sm text-gray-700">
+                                我确认提交的信息真实有效，且不包含违规内容
+                            </label>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                提交工具
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div id="submission-result" class="mt-6 hidden">
+                        <div class="p-4 rounded-md bg-green-50 border border-green-200">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-sm font-medium text-green-800">提交成功</h3>
+                                    <div class="mt-2 text-sm text-green-700">
+                                        <p>感谢您的提交！我们将尽快审核您提交的工具，审核通过后将会显示在网站上。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            <footer class="bg-white border-t border-gray-200 py-6 px-4 md:px-8">
+                <div class="text-center text-gray-500 text-sm">
+                    <p>© <span id="current-year"></span> AI 甄选. 保留所有权利.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置页脚年份
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // 处理表单提交
+            const form = document.getElementById('submit-tool-form');
+            const resultDiv = document.getElementById('submission-result');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 在实际应用中，这里应该发送数据到后端API
+                // 这里仅做演示，直接显示成功消息
+                
+                // 收集表单数据
+                const formData = {
+                    name: document.getElementById('tool-name').value,
+                    url: document.getElementById('tool-url').value,
+                    description: document.getElementById('tool-description').value,
+                    category: document.getElementById('tool-category').value,
+                    subCategory: document.getElementById('tool-subcategory').value,
+                    tags: document.getElementById('tool-tags').value.split(',').map(tag => tag.trim()),
+                    logo: document.getElementById('tool-logo').value,
+                    submitterEmail: document.getElementById('submitter-email').value
+                };
+                
+                console.log('提交的工具数据:', formData);
+                
+                // 显示成功消息
+                form.reset();
+                resultDiv.classList.remove('hidden');
+                
+                // 5秒后隐藏成功消息
+                setTimeout(() => {
+                    resultDiv.classList.add('hidden');
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html> 

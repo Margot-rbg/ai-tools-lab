@@ -35,9 +35,50 @@
         <div class="flex-grow flex flex-col">
             
             <header class="bg-white/80 backdrop-blur-sm shadow-sm p-4 flex justify-between items-center z-10 border-b border-gray-200">
-                <button id="menu-toggle-btn" class="p-2 rounded-md text-gray-700 hover:bg-gray-100 lg:hidden">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
+                <div class="flex items-center">
+                    <button id="menu-toggle-btn" class="p-2 rounded-md text-gray-700 hover:bg-gray-100 lg:hidden">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                    
+                    <!-- 搜索框 (桌面版) -->
+                    <div class="relative hidden md:block ml-4">
+                        <div class="flex items-center border border-gray-300 rounded-lg bg-white overflow-hidden">
+                            <div class="flex">
+                                <button id="search-dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2 px-4 text-sm font-medium text-gray-700 bg-gray-100 border-r border-gray-300 hover:bg-gray-200 focus:outline-none">
+                                    站内
+                                    <svg class="w-2.5 h-2.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                                </button>
+                                <div id="search-dropdown-menu" class="hidden absolute top-full left-0 mt-1 z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                                    <ul class="py-2 text-sm text-gray-700">
+                                        <li>
+                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">站内</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Bing</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">百度</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Google</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Perplexity</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <input type="search" id="search-input" class="block w-full p-2 text-sm text-gray-900 border-0 focus:outline-none focus:ring-0" placeholder="搜索AI工具和资讯...">
+                            <button type="submit" class="p-2 text-gray-500 hover:text-blue-600">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
                  <div class="hidden lg:flex items-center space-x-6">
                     <a href="index.html" class="text-sm font-semibold text-blue-600">AI工具集</a>
                     <a href="#" class="text-sm text-gray-600 hover:text-blue-600">AI应用</a>
@@ -50,7 +91,19 @@
             </header>
 
             <main class="flex-grow p-4 md:p-8 overflow-y-auto">
-                <h1 id="main-content-title" class="text-3xl font-bold text-gray-900 mb-4">全部 - 常用</h1>
+                <!-- 移动端搜索框 -->
+                <div class="mb-6 md:hidden">
+                    <div class="flex items-center border border-gray-300 rounded-lg bg-white overflow-hidden">
+                        <input type="search" class="block w-full p-2.5 text-sm text-gray-900 border-0 focus:outline-none focus:ring-0" placeholder="搜索AI工具和资讯...">
+                        <button type="submit" class="p-2.5 text-gray-500 hover:text-blue-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <h1 id="main-content-title" class="text-3xl font-bold text-gray-900 mb-4">AI Tools</h1>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
                     <a href="news.html" class="md:col-span-2 bg-blue-100 rounded-lg p-6 flex items-center justify-center text-xl font-bold text-blue-800 hover:opacity-90">每日AI快讯</a>
@@ -58,14 +111,58 @@
                     <a href="#" class="bg-yellow-100 rounded-lg p-6 flex items-center justify-center text-xl font-bold text-yellow-800 hover:opacity-90">AI教程&玩法</a>
                 </div>
                 
-                <div id="tab-filters" class="flex items-center border-b border-gray-200 mb-8">
+                <div id="tab-filters" class="flex items-center border-b border-gray-200 mb-4">
                     </div>
 
-                <div id="tool-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                <div id="tool-container" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-2">
                     </div>
             </main>
         </div>
     </div>
     <script src="app.js"></script>
+    
+    <script>
+        // 搜索下拉菜单功能
+        function setupSearchDropdown() {
+            const dropdown = document.getElementById('search-dropdown');
+            const dropdownMenu = document.getElementById('search-dropdown-menu');
+            
+            if (dropdown && dropdownMenu) {
+                dropdown.addEventListener('click', function() {
+                    dropdownMenu.classList.toggle('hidden');
+                });
+                
+                // 点击其他地方关闭下拉菜单
+                document.addEventListener('click', function(event) {
+                    if (!dropdown.contains(event.target)) {
+                        dropdownMenu.classList.add('hidden');
+                    }
+                });
+                
+                // 选择搜索引擎
+                const searchOptions = dropdownMenu.querySelectorAll('a');
+                searchOptions.forEach(option => {
+                    option.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        dropdown.textContent = this.textContent;
+                        const arrow = document.createElement('svg');
+                        arrow.className = 'w-2.5 h-2.5 ml-2';
+                        arrow.setAttribute('aria-hidden', 'true');
+                        arrow.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                        arrow.setAttribute('fill', 'none');
+                        arrow.setAttribute('viewBox', '0 0 10 6');
+                        arrow.innerHTML = '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>';
+                        dropdown.appendChild(arrow);
+                        dropdownMenu.classList.add('hidden');
+                    });
+                });
+            }
+        }
+        
+        // 页面加载时执行
+        document.addEventListener('DOMContentLoaded', function() {
+            setupSearchDropdown();
+        });
+    </script>
 </body>
 </html>

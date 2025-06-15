@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>每日AI快讯 - AI 甄选</title>
+    <title>搜索结果 - AI 甄选</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
@@ -42,6 +42,12 @@
         
         .autocomplete-active {
             background-color: #e6f2ff !important;
+        }
+        
+        /* 高亮搜索结果中的关键词 */
+        .highlight {
+            background-color: #ffff99;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -104,14 +110,15 @@
             </div>
             
             <div class="flex items-center space-x-4">
+                <a href="news.html" class="text-sm text-gray-600 hover:text-blue-600">每日AI快讯</a>
                 <a href="#" class="text-sm text-gray-600 hover:text-blue-600">关于我们</a>
             </div>
         </header>
 
         <main class="flex-grow p-4 md:p-8">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-3xl font-bold text-gray-900">每日AI快讯</h1>
-                <div id="current-date" class="text-lg font-medium text-blue-600"></div>
+            <div class="mb-6">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">搜索结果</h1>
+                <p id="search-summary" class="text-gray-600"></p>
             </div>
             
             <!-- 移动端搜索框 -->
@@ -129,101 +136,45 @@
                 </form>
             </div>
             
-            <!-- 热门搜索标签 -->
-            <div class="mb-8">
-                <div class="flex flex-wrap gap-2">
-                    <span class="text-sm text-gray-500">热门搜索：</span>
-                    <a href="search-results.html?q=ChatGPT&engine=site" class="text-sm text-blue-600 hover:underline">ChatGPT</a>
-                    <a href="search-results.html?q=Claude&engine=site" class="text-sm text-blue-600 hover:underline">Claude</a>
-                    <a href="search-results.html?q=AI绘画&engine=site" class="text-sm text-blue-600 hover:underline">AI绘画</a>
-                    <a href="search-results.html?q=Midjourney&engine=site" class="text-sm text-blue-600 hover:underline">Midjourney</a>
-                    <a href="search-results.html?q=大模型&engine=site" class="text-sm text-blue-600 hover:underline">大模型</a>
-                    <a href="search-results.html?q=AI编程&engine=site" class="text-sm text-blue-600 hover:underline">AI编程</a>
+            <!-- 搜索过滤器 -->
+            <div class="mb-6 flex flex-wrap gap-4">
+                <div class="flex items-center">
+                    <span class="text-sm font-medium text-gray-700 mr-2">分类：</span>
+                    <select id="category-filter" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2">
+                        <option value="all">AI Tools</option>
+                        <option value="tools">AI工具</option>
+                        <option value="news">AI资讯</option>
+                        <option value="tutorials">AI教程</option>
+                    </select>
+                </div>
+                
+                <div class="flex items-center">
+                    <span class="text-sm font-medium text-gray-700 mr-2">排序：</span>
+                    <select id="sort-filter" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2">
+                        <option value="relevance">相关度</option>
+                        <option value="date">日期</option>
+                        <option value="popularity">热度</option>
+                    </select>
                 </div>
             </div>
             
-            <p class="text-gray-600 mb-8">这里汇集了最新的AI行业动态、产品更新和技术突破</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- 新闻项目 -->
-                <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-1 rounded-full">技术突破</span>
-                        <span class="text-sm text-gray-500" id="news-date-1"></span>
-                    </div>
-                    <h2 class="text-xl font-bold text-gray-900 mb-2">Google DeepMind利用大语言模型解决未解决的数学问题</h2>
-                    <p class="text-gray-600 mb-4">Google DeepMind开发的FunSearch系统成功使用大语言模型解决了著名的"cap set"数学问题。研究人员称，这是首次使用大语言模型发现长期未解决的科学谜题的解决方案，证明AI可以产生超出人类已知范围的新信息。</p>
-                    <a href="https://www.scientificamerican.com/article/ai-beats-humans-on-unsolved-math-problem/" target="_blank" class="text-blue-600 hover:underline">阅读更多 →</a>
-                </div>
-                
-                <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-1 rounded-full">行业动态</span>
-                        <span class="text-sm text-gray-500" id="news-date-2"></span>
-                    </div>
-                    <h2 class="text-xl font-bold text-gray-900 mb-2">英特尔推出全新AI套件，斩获MWC最佳AI首秀</h2>
-                    <p class="text-gray-600 mb-4">英特尔推出了名为"英特尔AI Assistant Builder"的全新解决方案，这是一款操作简便的工具，可以让电脑制造商和软件供应商在几分钟内为任何应用场景创建定制化的AI助手。该工具已在巴塞罗那科技博览会上获得"最佳AI首秀大奖"。</p>
-                    <a href="https://newsroom.intel.com/zh-cn/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E8%8B%B1%E7%89%B9%E5%B0%94%E6%8E%A8%E5%87%BA%E5%85%A8%E6%96%B0ai%E5%A5%97%E4%BB%B6%EF%BC%8C%E6%96%A9%E8%8E%B7mwc2025%E6%9C%80%E4%BD%B3ai%E9%A6%96%E7%A7%80%EF%BC%8C%E5%8A%A9%E5%8A%9B%E7%94%A8%E6%88%B7" target="_blank" class="text-blue-600 hover:underline">阅读更多 →</a>
-                </div>
-                
-                <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-1 rounded-full">技术趋势</span>
-                        <span class="text-sm text-gray-500" id="news-date-3"></span>
-                    </div>
-                    <h2 class="text-xl font-bold text-gray-900 mb-2">前瞻2024人工智能四大趋势</h2>
-                    <p class="text-gray-600 mb-4">2024年人工智能技术与应用的发展将呈现四大趋势：从AI大模型迈向通用人工智能、合成数据打破AI训练数据瓶颈、量子计算机可能率先应用于人工智能、AI代理和无代码软件开发带来"冲击波"。这些趋势将重塑全球科技格局。</p>
-                    <a href="http://www.news.cn/tech/20240103/06334b17b41c44518168c2dea7bb844d/c.html" target="_blank" class="text-blue-600 hover:underline">阅读更多 →</a>
-                </div>
-                
-                <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-1 rounded-full">国际视角</span>
-                        <span class="text-sm text-gray-500" id="news-date-4"></span>
-                    </div>
-                    <h2 class="text-xl font-bold text-gray-900 mb-2">AI突围：中美博弈下的技术与产品突破</h2>
-                    <p class="text-gray-600 mb-4">DeepSeek事件凸显了中国在人工智能领域的快速崛起及其在全球科技竞争中的重要地位，同时也揭示了面临的国际技术封锁和法律风险等挑战。文章探讨了中国AI企业如何在全球竞争中突破重围。</p>
-                    <a href="https://www.yicai.com/news/102460679.html" target="_blank" class="text-blue-600 hover:underline">阅读更多 →</a>
-                </div>
-                
-                <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-1 rounded-full">实时资讯</span>
-                        <span class="text-sm text-gray-500" id="news-date-5"></span>
-                    </div>
-                    <h2 class="text-xl font-bold text-gray-900 mb-2">AI实时资讯聚合平台</h2>
-                    <p class="text-gray-600 mb-4">为了让您获取最新、最实时的AI资讯，我们整合了多个权威信息源，包括Google AI博客、OpenAI博客、MIT技术评论等。点击下方链接访问这些平台，获取第一手AI动态。</p>
-                    <div class="grid grid-cols-2 gap-2 mt-4">
-                        <a href="https://blog.google/technology/ai/" target="_blank" class="text-blue-600 hover:underline">Google AI博客 →</a>
-                        <a href="https://openai.com/blog" target="_blank" class="text-blue-600 hover:underline">OpenAI博客 →</a>
-                        <a href="https://www.technologyreview.com/topic/artificial-intelligence/" target="_blank" class="text-blue-600 hover:underline">MIT技术评论 →</a>
-                        <a href="https://www.deepmind.com/blog" target="_blank" class="text-blue-600 hover:underline">DeepMind博客 →</a>
-                    </div>
-                </div>
-                
-                <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-1 rounded-full">AI工具推荐</span>
-                        <span class="text-sm text-gray-500" id="news-date-6"></span>
-                    </div>
-                    <h2 class="text-xl font-bold text-gray-900 mb-2">本周热门AI工具精选</h2>
-                    <p class="text-gray-600 mb-4">我们每周为您精选最热门、最实用的AI工具，帮助您提高工作效率、激发创意灵感。本周推荐：Claude 3.5 Opus、Midjourney V6、Perplexity AI和Cursor编辑器。</p>
-                    <div class="grid grid-cols-2 gap-2 mt-4">
-                        <a href="https://claude.ai" target="_blank" class="text-blue-600 hover:underline">Claude 3.5 →</a>
-                        <a href="https://www.midjourney.com" target="_blank" class="text-blue-600 hover:underline">Midjourney →</a>
-                        <a href="https://www.perplexity.ai" target="_blank" class="text-blue-600 hover:underline">Perplexity AI →</a>
-                        <a href="https://cursor.sh" target="_blank" class="text-blue-600 hover:underline">Cursor编辑器 →</a>
-                    </div>
-                </div>
+            <!-- 搜索结果 -->
+            <div id="search-results" class="space-y-6">
+                <!-- 搜索结果将通过JavaScript动态添加 -->
             </div>
             
-            <div class="mt-12 bg-blue-50 border border-blue-200 rounded-lg p-6">
-                <h2 class="text-xl font-bold text-gray-900 mb-4">订阅AI快讯</h2>
-                <p class="text-gray-600 mb-6">每周收到最新的AI行业动态和技术更新，直接发送到您的邮箱</p>
-                <form class="flex flex-col sm:flex-row gap-4">
-                    <input type="email" placeholder="您的邮箱地址" class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">订阅</button>
-                </form>
+            <!-- 分页 -->
+            <div class="mt-8 flex justify-center">
+                <nav class="inline-flex rounded-md shadow">
+                    <a href="#" class="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">上一页</a>
+                    <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-blue-600">1</a>
+                    <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">2</a>
+                    <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">3</a>
+                    <span class="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>
+                    <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">8</a>
+                    <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">9</a>
+                    <a href="#" class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">下一页</a>
+                </nav>
             </div>
         </main>
 
@@ -235,7 +186,7 @@
     </div>
 
     <script>
-        // AI工具和资讯数据库 - 用于自动完成功能
+        // AI工具和资讯数据库 - 用于自动完成功能和模拟搜索结果
         const aiTools = [
             "ChatGPT", "Claude", "Midjourney", "DALL-E", "Stable Diffusion", 
             "Perplexity AI", "Cursor", "Copilot", "Anthropic", "Gemini", 
@@ -244,30 +195,153 @@
             "DeepSeek", "Sora", "AI Agent", "AI助手", "AI搜索"
         ];
         
-        // 显示当前日期
-        function displayCurrentDate() {
-            const now = new Date();
-            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-            document.getElementById('current-date').textContent = now.toLocaleDateString('zh-CN', options);
-            document.getElementById('current-year').textContent = now.getFullYear();
-            
-            // 为新闻设置近期日期
-            const today = new Date();
-            const newsDateElements = [
-                document.getElementById('news-date-1'),
-                document.getElementById('news-date-2'),
-                document.getElementById('news-date-3'),
-                document.getElementById('news-date-4'),
-                document.getElementById('news-date-5'),
-                document.getElementById('news-date-6')
-            ];
-            
-            // 设置不同的日期，最近的在前
-            for (let i = 0; i < newsDateElements.length; i++) {
-                const pastDate = new Date();
-                pastDate.setDate(today.getDate() - i);
-                newsDateElements[i].textContent = pastDate.toLocaleDateString('zh-CN');
+        // 模拟搜索结果数据
+        const searchResultsData = [
+            {
+                title: "ChatGPT - OpenAI开发的对话式人工智能",
+                content: "ChatGPT是由OpenAI开发的大型语言模型，能够理解和生成人类语言，回答问题，创建各种文本内容，并与用户进行自然对话。",
+                url: "https://chat.openai.com",
+                category: "tools",
+                date: "2023-11-30",
+                image: "https://www.google.com/s2/favicons?sz=64&domain_url=chat.openai.com"
+            },
+            {
+                title: "Claude - Anthropic推出的AI助手",
+                content: "Claude是由Anthropic开发的AI助手，专注于有用、无害和诚实的对话。最新版本Claude 3.5 Opus在多项基准测试中表现出色。",
+                url: "https://claude.ai",
+                category: "tools",
+                date: "2023-12-15",
+                image: "https://www.google.com/s2/favicons?sz=64&domain_url=claude.ai"
+            },
+            {
+                title: "Google DeepMind利用大语言模型解决未解决的数学问题",
+                content: "Google DeepMind开发的FunSearch系统成功使用大语言模型解决了著名的"cap set"数学问题。研究人员称，这是首次使用大语言模型发现长期未解决的科学谜题的解决方案。",
+                url: "news.html",
+                category: "news",
+                date: "2023-12-14",
+                image: ""
+            },
+            {
+                title: "Midjourney - AI图像生成工具",
+                content: "Midjourney是一款强大的AI图像生成工具，通过文本提示创建高质量的艺术图像。最新的V6版本提供了更高的图像质量和更好的提示理解能力。",
+                url: "https://www.midjourney.com",
+                category: "tools",
+                date: "2024-01-10",
+                image: "https://www.google.com/s2/favicons?sz=64&domain_url=midjourney.com"
+            },
+            {
+                title: "如何使用AI提高工作效率 - 实用教程",
+                content: "本教程详细介绍了如何利用各种AI工具提高日常工作效率，包括文档处理、内容创作、数据分析等方面的实用技巧。",
+                url: "#",
+                category: "tutorials",
+                date: "2024-02-05",
+                image: ""
             }
+        ];
+        
+        // 获取URL参数
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                query: params.get('q') || '',
+                engine: params.get('engine') || 'site',
+                category: params.get('category') || 'all',
+                sort: params.get('sort') || 'relevance',
+                page: parseInt(params.get('page') || '1')
+            };
+        }
+        
+        // 高亮搜索关键词
+        function highlightText(text, query) {
+            if (!query) return text;
+            
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+        
+        // 渲染搜索结果
+        function renderSearchResults() {
+            const params = getUrlParams();
+            const resultsContainer = document.getElementById('search-results');
+            const searchSummary = document.getElementById('search-summary');
+            const searchInput = document.getElementById('search-input');
+            
+            // 设置搜索框的值
+            if (searchInput) {
+                searchInput.value = params.query;
+            }
+            
+            // 设置搜索摘要
+            if (searchSummary) {
+                searchSummary.textContent = `找到与 "${params.query}" 相关的结果约 ${searchResultsData.length} 个`;
+            }
+            
+            // 过滤搜索结果
+            let filteredResults = searchResultsData;
+            
+            if (params.query) {
+                filteredResults = filteredResults.filter(result => 
+                    result.title.toLowerCase().includes(params.query.toLowerCase()) || 
+                    result.content.toLowerCase().includes(params.query.toLowerCase())
+                );
+            }
+            
+            if (params.category !== 'all') {
+                filteredResults = filteredResults.filter(result => result.category === params.category);
+            }
+            
+            // 排序结果
+            if (params.sort === 'date') {
+                filteredResults.sort((a, b) => new Date(b.date) - new Date(a.date));
+            }
+            
+            // 清空结果容器
+            resultsContainer.innerHTML = '';
+            
+            // 如果没有结果
+            if (filteredResults.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="text-center py-10">
+                        <p class="text-lg text-gray-600">没有找到与 "${params.query}" 相关的结果</p>
+                        <p class="text-gray-500 mt-2">请尝试其他关键词或浏览我们的热门内容</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 渲染结果
+            filteredResults.forEach(result => {
+                const resultElement = document.createElement('div');
+                resultElement.className = 'bg-white border border-gray-200 rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow';
+                
+                const title = highlightText(result.title, params.query);
+                const content = highlightText(result.content, params.query);
+                
+                resultElement.innerHTML = `
+                    <div class="flex items-start">
+                        ${result.image ? `
+                            <div class="flex-shrink-0 mr-4">
+                                <img src="${result.image}" alt="${result.title}" class="w-10 h-10 rounded-full border border-gray-100">
+                            </div>
+                        ` : ''}
+                        <div class="flex-grow">
+                            <h2 class="text-lg font-semibold text-blue-600 mb-1">
+                                <a href="${result.url}" ${result.url.startsWith('http') ? 'target="_blank"' : ''}>${title}</a>
+                            </h2>
+                            <p class="text-gray-600 mb-2">${content}</p>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <span class="mr-3">${result.date}</span>
+                                <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2 py-0.5 rounded">
+                                    ${result.category === 'tools' ? 'AI工具' : 
+                                      result.category === 'news' ? 'AI资讯' : 'AI教程'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                resultsContainer.appendChild(resultElement);
+            });
         }
         
         // 搜索下拉菜单功能
@@ -413,8 +487,7 @@
                     break;
                 case 'site':
                 default:
-                    // 站内搜索 - 如果有实际的后端，这里应该提交到站内搜索页面
-                    // 现在我们只是模拟跳转到搜索结果页面
+                    // 站内搜索 - 更新当前页面URL
                     searchUrl = `search-results.html?q=${encodeURIComponent(query)}&engine=${engine}`;
                     break;
             }
@@ -428,12 +501,49 @@
             }
         }
         
+        // 设置过滤器事件
+        function setupFilters() {
+            const categoryFilter = document.getElementById('category-filter');
+            const sortFilter = document.getElementById('sort-filter');
+            const params = getUrlParams();
+            
+            // 设置初始值
+            if (categoryFilter) {
+                categoryFilter.value = params.category;
+                categoryFilter.addEventListener('change', function() {
+                    const url = new URL(window.location);
+                    url.searchParams.set('category', this.value);
+                    url.searchParams.set('page', '1'); // 重置页码
+                    window.location.href = url.toString();
+                });
+            }
+            
+            if (sortFilter) {
+                sortFilter.value = params.sort;
+                sortFilter.addEventListener('change', function() {
+                    const url = new URL(window.location);
+                    url.searchParams.set('sort', this.value);
+                    window.location.href = url.toString();
+                });
+            }
+        }
+        
+        // 设置页脚年份
+        function setFooterYear() {
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+        }
+        
         // 页面加载时执行
         window.onload = function() {
-            displayCurrentDate();
             setupSearchDropdown();
             setupAutocomplete();
             setupSearchForm();
+            setupFilters();
+            renderSearchResults();
+            setFooterYear();
         };
     </script>
 </body>

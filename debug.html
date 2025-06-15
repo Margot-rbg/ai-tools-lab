@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airtable数据加载调试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        #log {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            margin-bottom: 20px;
+        }
+        .log-item {
+            margin: 5px 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        .error { color: red; }
+        .success { color: green; }
+        .info { color: blue; }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #stats {
+            margin-top: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Airtable数据加载调试工具</h1>
+    
+    <div>
+        <button id="load-data">加载所有Airtable数据</button>
+        <button id="check-local">检查本地存储</button>
+        <button id="clear-local">清除本地存储</button>
+        <button id="save-json">保存为JSON文件</button>
+    </div>
+    
+    <div id="log"></div>
+    
+    <div id="stats">
+        <h2>数据统计</h2>
+        <div id="total-count">总工具数: 0</div>
+        <table id="category-stats">
+            <thead>
+                <tr>
+                    <th>分类</th>
+                    <th>数量</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        // Airtable API信息
+        const AIRTABLE_API_KEY = 'patDnnNXsZc7hyN9O.88db80fb185f95d817ae168f6f4d27a3eb1b4b11cb05f63ec861c641870ade3f';
+        const AIRTABLE_BASE_ID = 'appFgytRmxSpFbdJf';
+        const AIRTABLE_TABLE_NAME = '工具列表';
+        
+        // DOM元素
+        const logEl = document.getElementById('log');
+        const loadBtn = document.getElementById('load-data');
+        const checkLocalBtn = document.getElementById('check-local');
+        const clearLocalBtn = document.getElementById('clear-local');
+        const saveJsonBtn = document.getElementById('save-json');
+        const totalCountEl = document.getElementById('total-count');
+        const categoryStatsEl = document.getElementById('category-stats').querySelector('tbody');
+        
+        // 全局变量
+        let allTools = [];
+        
+        // 日志函数
+        function log(message, type = 'info') {
+            const logItem = document.createElement('div');
+            logItem.className = `log-item ${type}`;
+            logItem.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logEl.appendChild(logItem);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+        
+        // 更新统计信息
+        function updateStats() {
+            // 更新总数
+            totalCountEl.textContent = `总工具数: ${allTools.length}`;
+            
+            // 按分类统计
+            const categories = {};
+            allTools.forEach(tool => {
+                const category = tool.category || '未分类';
+                categories[category] = (categories[category] || 0) + 1;
+            });
+            
+            // 清空现有表格
+            categoryStatsEl.innerHTML = '';
+            
+            // 填充表格
+            Object.entries(categories).forEach(([category, count]) => {
+                const row = document.createElement('tr');
+                
+                const categoryCell = document.createElement('td');
+                categoryCell.textContent = category;
+                row.appendChild(categoryCell);
+                
+                const countCell = document.createElement('td');
+                countCell.textContent = count;
+                row.appendChild(countCell);
+                
+                categoryStatsEl.appendChild(row);
+            });
+        }
+        
+        // 从Airtable加载所有数据
+        async function loadAllData() {
+            try {
+                loadBtn.disabled = true;
+                allTools = [];
+                log('开始加载Airtable数据...');
+                await fetchAllRecords();
+                log(`所有数据加载完成，共 ${allTools.length} 个工具`, 'success');
+                
+                // 保存到本地存储
+                try {
+                    localStorage.setItem('aiToolsData', JSON.stringify(allTools));
+                    localStorage.setItem('aiToolsDataTimestamp', Date.now());
+                    log('数据已保存到本地存储', 'success');
+                } catch (e) {
+                    log(`保存到本地存储失败: ${e.message}`, 'error');
+                }
+                
+                updateStats();
+            } catch (error) {
+                log(`加载数据出错: ${error.message}`, 'error');
+            } finally {
+                loadBtn.disabled = false;
+            }
+        }
+        
+        // 递归获取所有页面数据
+        async function fetchAllRecords(offset = null) {
+            // 构建API URL
+            let url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
+            if (offset) {
+                url += `?offset=${offset}`;
+            }
+            
+            log(`正在获取数据，偏移量: ${offset || '无'}`);
+            
+            // 发起请求
+            const response = await fetch(url, {
+                headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` }
+            });
+            
+            if (!response.ok) {
+                throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            
+            if (!data.records) {
+                throw new Error('返回的数据格式不正确，缺少records字段');
+            }
+            
+            log(`本页获取到 ${data.records.length} 条记录`);
+            
+            // 转换并添加到全局数组
+            const pageTools = data.records.map(record => {
+                const fields = record.fields;
+                return {
+                    id: record.id,
+                    name: fields.name || '（无名称）',
+                    url: fields.url || '#',
+                    description: fields.description || '',
+                    logo: (fields.logo && fields.logo[0]) ? fields.logo[0].url : null,
+                    category: fields.category,
+                    subCategory: fields.subCategory,
+                    tags: fields.tags
+                };
+            });
+            
+            allTools = [...allTools, ...pageTools];
+            log(`当前总共获取到 ${allTools.length} 条记录`);
+            
+            // 如果有更多页，继续获取
+            if (data.offset) {
+                log(`检测到更多数据，继续获取下一页...`);
+                return fetchAllRecords(data.offset);
+            }
+        }
+        
+        // 检查本地存储
+        function checkLocalStorage() {
+            try {
+                const cachedData = localStorage.getItem('aiToolsData');
+                const timestamp = localStorage.getItem('aiToolsDataTimestamp');
+                
+                if (!cachedData) {
+                    log('本地存储中没有缓存的工具数据', 'info');
+                    return;
+                }
+                
+                const tools = JSON.parse(cachedData);
+                const date = new Date(parseInt(timestamp));
+                
+                log(`本地存储中有 ${tools.length} 个工具`, 'success');
+                log(`缓存时间: ${date.toLocaleString()}`);
+                
+                allTools = tools;
+                updateStats();
+            } catch (error) {
+                log(`检查本地存储出错: ${error.message}`, 'error');
+            }
+        }
+        
+        // 清除本地存储
+        function clearLocalStorage() {
+            try {
+                localStorage.removeItem('aiToolsData');
+                localStorage.removeItem('aiToolsDataTimestamp');
+                log('本地存储已清除', 'success');
+            } catch (error) {
+                log(`清除本地存储出错: ${error.message}`, 'error');
+            }
+        }
+        
+        // 保存为JSON文件
+        function saveToJsonFile() {
+            if (allTools.length === 0) {
+                log('没有数据可保存', 'error');
+                return;
+            }
+            
+            try {
+                const dataStr = JSON.stringify(allTools, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                
+                const exportFileDefaultName = 'all-tools.json';
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+                
+                log('数据已保存为JSON文件', 'success');
+            } catch (error) {
+                log(`保存JSON文件出错: ${error.message}`, 'error');
+            }
+        }
+        
+        // 事件监听
+        loadBtn.addEventListener('click', loadAllData);
+        checkLocalBtn.addEventListener('click', checkLocalStorage);
+        clearLocalBtn.addEventListener('click', clearLocalStorage);
+        saveJsonBtn.addEventListener('click', saveToJsonFile);
+        
+        // 初始化
+        log('调试工具已准备就绪');
+    </script>
+</body>
+</html> 

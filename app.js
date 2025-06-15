@@ -13,13 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. 定义全局状态变量
     let allTools = [];
-    let activeCategory = '全部';
-    let activeSubCategory = '常用';
+    let activeCategory = 'AI Tools';
+    let activeSubCategory = '全部'; // 修改默认子分类为"全部"，而不是"常用"
     let searchTerm = '';
 
     // 3. 图标数据 (请确保这里的key和你的Airtable分类名一致)
     const categoryIcons = {
-        '全部': `<svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>`,
+        'AI Tools': `<svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>`,
         'AI办公': `<svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>`,
         'AI写作': `<svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>`,
         'AI视频': `<svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>`,
@@ -42,21 +42,59 @@ document.addEventListener('DOMContentLoaded', () => {
             toolContainer.innerHTML = `<p class="text-gray-500 text-center col-span-full py-10">在此分类下未找到相关的AI工具。</p>`;
             return;
         }
+        
+        // 添加工具总数显示
+        const countInfo = document.createElement('div');
+        countInfo.className = 'col-span-full mb-4 text-sm text-gray-500';
+        countInfo.textContent = `显示 ${tools.length} 个工具`;
+        toolContainer.appendChild(countInfo);
+        
         tools.forEach(tool => {
-            const tagsHTML = (tool.tags || []).map(tag => `<span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-1 rounded-full">${tag}</span>`).join('');
-            const cardHTML = `<div class="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col"><a href="${tool.url}" target="_blank" class="p-6 flex-grow"><div class="flex items-center mb-4"><div class="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0 border border-gray-100"><img src="${tool.logo}" alt="${tool.name} logo" class="w-full h-full object-cover"></div><h3 class="text-lg font-semibold tracking-tight text-gray-900">${tool.name}</h3></div><p class="text-sm text-gray-600 mb-4" style="min-height: 60px;">${tool.description}</p></a><div class="px-6 pt-2 pb-4 border-t border-gray-100"><div class="flex flex-wrap items-center">${tagsHTML}</div></div></div>`;
+            // 截断描述文本，只显示前30个字符
+            const shortDescription = tool.description && tool.description.length > 30 
+                ? tool.description.substring(0, 30) + '...' 
+                : tool.description || '';
+            
+            // 确保图片URL有效，如果没有有效的logo，使用默认图标
+            const logoUrl = tool.logo || `https://www.google.com/s2/favicons?sz=64&domain_url=${tool.url || 'google.com'}`;
+            
+            const cardHTML = `
+            <a href="${tool.url}" target="_blank" class="bg-white border border-gray-200 rounded-lg p-3 flex flex-col items-center text-center hover:shadow-md transition-shadow duration-300 group relative">
+                <div class="w-12 h-12 rounded-full overflow-hidden mb-2 border border-gray-100">
+                    <img src="${logoUrl}" alt="${tool.name} logo" class="w-full h-full object-cover" onerror="this.src='https://www.google.com/s2/favicons?sz=64&domain_url=${tool.url}'">
+                </div>
+                <h3 class="text-sm font-semibold text-gray-900 mb-1">${tool.name}</h3>
+                <p class="text-xs text-gray-500 line-clamp-2">${shortDescription}</p>
+                
+                <!-- 悬浮时显示的完整描述 -->
+                <div class="absolute inset-0 bg-white p-3 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex flex-col items-start text-left">
+                    <div class="flex items-center w-full mb-2">
+                        <div class="w-10 h-10 rounded-full overflow-hidden mr-2 flex-shrink-0 border border-gray-100">
+                            <img src="${logoUrl}" alt="${tool.name} logo" class="w-full h-full object-cover" onerror="this.src='https://www.google.com/s2/favicons?sz=64&domain_url=${tool.url}'">
+                        </div>
+                        <h3 class="text-sm font-semibold text-gray-900">${tool.name}</h3>
+                    </div>
+                    <p class="text-xs text-gray-600 mb-2 flex-grow overflow-y-auto">${tool.description}</p>
+                    <div class="text-xs text-blue-600 mt-auto">点击访问 →</div>
+                </div>
+            </a>`;
+            
             toolContainer.innerHTML += cardHTML;
         });
     };
 
     const filterAndRender = () => {
         let filteredTools = allTools;
-        if (activeCategory !== '全部') {
+        
+        // 修改过滤逻辑，修复子分类过滤
+        if (activeCategory !== 'AI Tools') {
             filteredTools = filteredTools.filter(tool => tool.category === activeCategory);
         }
+        
         if (activeSubCategory !== '全部') {
             filteredTools = filteredTools.filter(tool => tool.subCategory === activeSubCategory);
         }
+        
         if (searchTerm) {
             filteredTools = filteredTools.filter(tool => 
                 tool.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -64,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 (tool.tags && tool.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())))
             );
         }
+        
         console.log(`筛选后的工具数量: ${filteredTools.length}, 分类: ${activeCategory}, 子分类: ${activeSubCategory}`);
         mainContentTitle.textContent = `${activeCategory} - ${activeSubCategory}`;
         renderTools(filteredTools);
@@ -78,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // 从工具数据中提取所有分类
-        const categories = ['全部'];
+        const categories = ['AI Tools'];
         const categorySet = new Set();
         
         allTools.forEach(tool => {
@@ -92,7 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         console.log("可用分类:", categories);
         
-        const subCategories = ['常用', '探索', '专业']; // 你可以自定义这里的子分类
+        // 修改子分类，添加"全部"选项
+        const subCategories = ['全部', '常用', '探索', '专业']; 
 
         desktopSidebarContainer.innerHTML = '';
         mobileSidebarContainer.innerHTML = '';
@@ -132,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             console.log(`点击了分类: ${category}`);
             activeCategory = category;
-            activeSubCategory = '常用';
+            activeSubCategory = '全部'; // 修改为默认显示全部
             if (searchInput) searchInput.value = '';
             searchTerm = '';
             updateSidebarActiveState();
@@ -181,9 +221,129 @@ document.addEventListener('DOMContentLoaded', () => {
     menuToggleBtn.addEventListener('click', toggleMenu);
     sidebarBackdrop.addEventListener('click', toggleMenu);
 
-    // 添加一个函数来加载本地数据
+    // --- 6. 初始加载数据 ---
+    // !!! 确保这里的API信息是你自己的 !!!
+    const AIRTABLE_API_KEY = 'patDnnNXsZc7hyN9O.88db80fb185f95d817ae168f6f4d27a3eb1b4b11cb05f63ec861c641870ade3f';
+    const AIRTABLE_BASE_ID = 'appFgytRmxSpFbdJf';
+    const AIRTABLE_TABLE_NAME = '工具列表';
+    
+    // 修改：添加一个函数来递归加载所有Airtable数据（处理分页）
+    const loadAllAirtableData = async (offset = null) => {
+        try {
+            // 显示加载状态
+            if (offset === null) {
+                toolContainer.innerHTML = '<p class="text-center col-span-full py-10">正在加载AI工具数据，请稍候...</p>';
+            }
+            
+            // 构建API URL，如果有offset则添加
+            let airtableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
+            if (offset) {
+                airtableUrl += `?offset=${offset}`;
+            }
+            
+            // 发起请求
+            console.log(`加载Airtable数据，偏移量: ${offset || '无'}`);
+            const response = await fetch(airtableUrl, { 
+                headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` } 
+            });
+            
+            if (!response.ok) {
+                throw new Error(`网络请求失败，状态码: ${response.status} ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            
+            if (!data.records) {
+                throw new Error("Airtable返回的数据格式不正确，缺少 'records' 数组。");
+            }
+            
+            // 转换本页数据
+            const pageTools = data.records.map(record => {
+                const fields = record.fields;
+                return {
+                    id: record.id, 
+                    name: fields.name || '（无名称）', 
+                    url: fields.url || '#',
+                    description: fields.description || '',
+                    logo: (fields.logo && fields.logo[0]) ? fields.logo[0].url : `https://www.google.com/s2/favicons?sz=64&domain_url=${fields.url || 'google.com'}`,
+                    category: fields.category, 
+                    subCategory: fields.subCategory, 
+                    tags: fields.tags
+                };
+            });
+            
+            // 添加到全局工具数组
+            allTools = [...allTools, ...pageTools];
+            console.log(`已加载 ${allTools.length} 个工具`);
+            
+            // 如果有更多页，继续加载
+            if (data.offset) {
+                return await loadAllAirtableData(data.offset); // 添加await确保递归调用正确完成
+            } else {
+                // 全部加载完成，保存到本地存储以加快下次加载
+                try {
+                    localStorage.setItem('aiToolsData', JSON.stringify(allTools));
+                    localStorage.setItem('aiToolsDataTimestamp', Date.now());
+                    console.log('工具数据已保存到本地存储');
+                } catch (e) {
+                    console.warn('无法保存到本地存储:', e);
+                }
+                
+                // 设置导航和渲染页面
+                setupNavigations();
+                setupSearch();
+                filterAndRender();
+                return allTools;
+            }
+        } catch (error) {
+            console.error('加载Airtable数据出错:', error);
+            // 尝试从本地存储加载
+            const cachedData = localStorage.getItem('aiToolsData');
+            if (cachedData) {
+                console.log('从本地存储加载数据');
+                allTools = JSON.parse(cachedData);
+                setupNavigations();
+                setupSearch();
+                filterAndRender();
+                return allTools;
+            } else {
+                // 如果本地存储也没有，则加载本地JSON文件
+                loadLocalData();
+            }
+        }
+    };
+
+    // 添加一个函数来检查本地存储的数据是否新鲜
+    const checkAndLoadData = () => {
+        const cachedData = localStorage.getItem('aiToolsData');
+        const timestamp = localStorage.getItem('aiToolsDataTimestamp');
+        const now = Date.now();
+        const ONE_DAY = 24 * 60 * 60 * 1000; // 24小时的毫秒数
+        
+        // 如果有缓存数据且不超过1天
+        if (cachedData && timestamp && (now - timestamp) < ONE_DAY) {
+            console.log('使用本地缓存的数据');
+            try {
+                allTools = JSON.parse(cachedData);
+                console.log(`从本地存储加载了 ${allTools.length} 个工具`);
+                setupNavigations();
+                setupSearch();
+                filterAndRender();
+            } catch (e) {
+                console.error('解析本地存储数据出错:', e);
+                loadAllAirtableData();
+            }
+        } else {
+            // 否则重新加载
+            loadAllAirtableData();
+        }
+    };
+
+    // 修改本地数据加载函数，确保它能正确处理错误
     const loadLocalData = () => {
         console.log("开始加载本地数据...");
+        toolContainer.innerHTML = '<p class="text-center col-span-full py-10">正在加载本地数据...</p>';
+        
         fetch('data.json')
             .then(response => {
                 if (!response.ok) {
@@ -204,65 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     };
 
-    // --- 6. 初始加载数据 ---
-    // !!! 确保这里的API信息是你自己的 !!!
-    const AIRTABLE_API_KEY = 'patDnnNXsZc7hyN9O.88db80fb185f95d817ae168f6f4d27a3eb1b4b11cb05f63ec861c641870ade3f';
-    const AIRTABLE_BASE_ID = 'appFgytRmxSpFbdJf';
-    const AIRTABLE_TABLE_NAME = '工具列表';
-    const airtableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
-    
-    // 先尝试从 Airtable 加载数据，如果失败则使用本地数据
-    fetch(airtableUrl, { headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` } })
-        .then(response => {
-            console.log("第一步：网络响应检查...");
-            if (!response.ok) {
-                // 如果网络响应状态不为200-299，就抛出错误
-                throw new Error(`网络请求失败，状态码: ${response.status} ${response.statusText}`);
-            }
-            console.log("第一步：网络响应成功！状态码:", response.status);
-            return response.json();
-        })
-        .then(data => {
-            console.log("第二步：成功将响应解析为JSON格式", data);
-
-            // 检查Airtable返回的数据结构是否正确
-            if (!data.records) {
-                throw new Error("Airtable返回的数据格式不正确，缺少 'records' 数组。");
-            }
-            console.log("第二步：数据结构检查通过，找到了 'records' 数组。");
-
-            // 转换数据
-            const transformedTools = data.records.map(record => {
-                const fields = record.fields;
-                // 确保即使某些字段为空，也不会导致整个程序崩溃
-                return {
-                    id: record.id, 
-                    name: fields.name || '（无名称）', 
-                    url: fields.url || '#',
-                    description: fields.description || '',
-                    logo: (fields.logo && fields.logo[0]) ? fields.logo[0].url : `https://www.google.com/s2/favicons?sz=64&domain_url=${fields.url || 'google.com'}`,
-                    category: fields.category, 
-                    subCategory: fields.subCategory, 
-                    tags: fields.tags
-                };
-            });
-            console.log("第三步：数据转换成功！转换后的工具数量:", transformedTools.length);
-            allTools = transformedTools;
-            
-            // 依次执行后续函数
-            console.log("第四步：开始设置导航...");
-            setupNavigations();
-            console.log("第五步：开始设置搜索...");
-            setupSearch();
-            console.log("第六步：开始最终渲染...");
-            filterAndRender();
-            console.log("第七步：所有设置完成，页面应该已正确渲染！");
-        })
-        .catch(error => {
-            // 如果以上任何一步出错，都会在这里被捕获
-            console.error('【Airtable API错误】:', error);
-            console.log('尝试加载本地数据...');
-            loadLocalData();
-        });
+    // 启动应用 - 使用优化的数据加载策略
+    checkAndLoadData();
 });
       

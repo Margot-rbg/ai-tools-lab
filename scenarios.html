@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>场景解决方案 - AI工具实验室</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        body {
+            background-color: #f8faff; 
+            background-image: 
+                radial-gradient(circle at 90% 10%, rgba(204, 185, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 10% 90%, rgba(191, 219, 254, 0.4) 0%, transparent 50%);
+            background-attachment: fixed; 
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    <div class="flex h-screen">
+        <div class="flex-grow flex flex-col">
+            <header class="bg-white/80 backdrop-blur-sm shadow-sm p-4 flex justify-between items-center z-10 border-b border-gray-200">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold text-blue-600">AI工具实验室</a>
+                    
+                    <!-- 搜索框 (桌面版) -->
+                    <div class="relative hidden md:block ml-4">
+                        <div class="flex items-center border border-gray-300 rounded-lg bg-white overflow-hidden">
+                            <input type="search" id="search-input" class="block w-full p-2 text-sm text-gray-900 border-0 focus:outline-none focus:ring-0" placeholder="搜索AI工具和场景...">
+                            <button type="submit" class="p-2 text-gray-500 hover:text-blue-600">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden lg:flex items-center space-x-6">
+                    <a href="index.html" class="text-sm text-gray-600 hover:text-blue-600">AI工具集</a>
+                    <a href="scenarios.html" class="text-sm font-semibold text-blue-600">场景解决方案</a>
+                    <a href="news.html" class="text-sm text-gray-600 hover:text-blue-600">AI快讯</a>
+                    <a href="prompts.html" class="text-sm text-gray-600 hover:text-blue-600">提示词库</a>
+                </div>
+                <div class="flex items-center space-x-4 ml-auto">
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600">登录</a>
+                    <a href="submit-tool.html" class="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg">提交工具</a>
+                </div>
+            </header>
+
+            <main class="flex-grow p-4 md:p-8 overflow-y-auto">
+                <div class="max-w-7xl mx-auto">
+                    <!-- 页面标题 -->
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-gray-900">场景解决方案</h1>
+                        <p class="mt-2 text-lg text-gray-600">根据您的实际需求场景，找到最佳AI工具组合和使用指南</p>
+                    </div>
+                    
+                    <!-- 场景筛选器 -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+                        <div class="flex flex-wrap gap-4">
+                            <div>
+                                <label for="user-type" class="block text-sm font-medium text-gray-700 mb-1">用户类型</label>
+                                <select id="user-type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+                                    <option value="all">全部</option>
+                                    <option value="beginner">初学者</option>
+                                    <option value="professional">专业人士</option>
+                                    <option value="business">企业用户</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="category" class="block text-sm font-medium text-gray-700 mb-1">场景分类</label>
+                                <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+                                    <option value="all">全部分类</option>
+                                    <option value="content">内容创作</option>
+                                    <option value="programming">编程开发</option>
+                                    <option value="design">设计创意</option>
+                                    <option value="business">商业应用</option>
+                                    <option value="education">教育学习</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="sort" class="block text-sm font-medium text-gray-700 mb-1">排序方式</label>
+                                <select id="sort" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+                                    <option value="popular">热门程度</option>
+                                    <option value="newest">最新添加</option>
+                                    <option value="rating">用户评分</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 精选场景 -->
+                    <div class="mb-10">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">精选场景</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- 精选场景1 -->
+                            <a href="scenario-content-creation.html" class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                                <div class="h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </div>
+                                <div class="p-5">
+                                    <div class="flex items-center mb-2">
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded mr-2">内容创作</span>
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">初学者友好</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2">AI辅助内容创作全流程</h3>
+                                    <p class="text-gray-600 mb-3">从构思到成文，利用AI工具高效创作高质量内容，包括文章、博客和社交媒体帖子。</p>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <span class="flex items-center mr-3">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            4步工作流
+                                        </span>
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
+                                            12,345次查看
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- 精选场景2 -->
+                            <a href="scenario-code-assistant.html" class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                                <div class="h-48 bg-gradient-to-r from-green-500 to-teal-600 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                    </svg>
+                                </div>
+                                <div class="p-5">
+                                    <div class="flex items-center mb-2">
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded mr-2">编程开发</span>
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">专业人士</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2">AI辅助编程与代码优化</h3>
+                                    <p class="text-gray-600 mb-3">利用AI工具提升编程效率，从代码生成到调试、重构和优化，全面提升开发流程。</p>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <span class="flex items-center mr-3">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            5步工作流
+                                        </span>
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
+                                            9,876次查看
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- 精选场景3 -->
+                            <a href="scenario-image-creation.html" class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                                <div class="h-48 bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div class="p-5">
+                                    <div class="flex items-center mb-2">
+                                        <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded mr-2">设计创意</span>
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">初学者友好</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2">AI图像生成与设计</h3>
+                                    <p class="text-gray-600 mb-3">从创意构思到精美成图，掌握AI图像生成工具的最佳实践，创作专业级别的视觉内容。</p>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <span class="flex items-center mr-3">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            3步工作流
+                                        </span>
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
+                                            8,765次查看
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 场景分类 -->
+                    <div class="mb-10">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">按分类浏览</h2>
+                        
+                        <!-- 内容创作分类 -->
+                        <div class="mb-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold text-gray-900">内容创作</h3>
+                                <a href="#" class="text-sm text-blue-600 hover:underline">查看全部</a>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <a href="#" class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-1">博客文章创作</h4>
+                                    <p class="text-sm text-gray-600">利用AI工具从构思到发布完成高质量博客文章</p>
+                                </a>
+                                
+                                <a href="#" class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-1">社交媒体内容批量生成</h4>
+                                    <p class="text-sm text-gray-600">高效创建多平台社交媒体内容，保持一致品牌调性</p>
+                                </a>
+                                
+                                <a href="#" class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-1">多语言内容本地化</h4>
+                                    <p class="text-sm text-gray-600">使用AI工具快速将内容翻译并适配多种语言和文化</p>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- 编程开发分类 -->
+                        <div class="mb-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold text-gray-900">编程开发</h3>
+                                <a href="#" class="text-sm text-blue-600 hover:underline">查看全部</a>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <a href="#" class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-1">快速原型开发</h4>
+                                    <p class="text-sm text-gray-600">使用AI工具加速从想法到可工作原型的开发过程</p>
+                                </a>
+                                
+                                <a href="#" class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-1">代码优化与重构</h4>
+                                    <p class="text-sm text-gray-600">利用AI分析并改进现有代码，提高性能和可维护性</p>
+                                </a>
+                                
+                                <a href="#" class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-1">自动化测试生成</h4>
+                                    <p class="text-sm text-gray-600">使用AI工具快速生成全面的测试套件，提高代码质量</p>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- 设计创意分类 -->
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold text-gray-900">设计创意</h3>
+                                <a href="#" class="text-sm text-blue-600 hover:underline">查看全部</a>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <a href="#" class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-1">品牌视觉设计</h4>
+                                    <p class="text-sm text-gray-600">使用AI工具创建一致的品牌视觉元素，从logo到配色方案</p>
+                                </a>
+                                
+                                <a href="#" class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-1">产品包装设计</h4>
+                                    <p class="text-sm text-gray-600">利用AI快速生成和迭代产品包装设计方案</p>
+                                </a>
+                                
+                                <a href="#" class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-1">UI/UX设计辅助</h4>
+                                    <p class="text-sm text-gray-600">使用AI工具加速用户界面设计和原型创建过程</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 新增场景 -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">没有找到您需要的场景？</h2>
+                        <p class="text-gray-600 mb-4">我们正在不断添加新的场景解决方案。您可以提交您的需求，我们会优先考虑开发。</p>
+                        <a href="#" class="inline-flex items-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            提交场景需求
+                        </a>
+                    </div>
+                </div>
+            </main>
+            
+            <footer class="bg-white border-t border-gray-200 py-6 px-4 md:px-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-900 mb-3">关于我们</h3>
+                            <p class="text-sm text-gray-600">AI工具实验室致力于帮助用户发现、学习和应用最佳AI工具组合，提高工作效率和创造力。</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-900 mb-3">导航</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li><a href="index.html" class="text-gray-600 hover:text-blue-600">首页</a></li>
+                                <li><a href="scenarios.html" class="text-gray-600 hover:text-blue-600">场景解决方案</a></li>
+                                <li><a href="news.html" class="text-gray-600 hover:text-blue-600">AI快讯</a></li>
+                                <li><a href="prompts.html" class="text-gray-600 hover:text-blue-600">提示词库</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-900 mb-3">资源</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li><a href="#" class="text-gray-600 hover:text-blue-600">AI工具使用教程</a></li>
+                                <li><a href="#" class="text-gray-600 hover:text-blue-600">最佳实践指南</a></li>
+                                <li><a href="#" class="text-gray-600 hover:text-blue-600">常见问题</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-900 mb-3">联系我们</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li><a href="#" class="text-gray-600 hover:text-blue-600">提交反馈</a></li>
+                                <li><a href="#" class="text-gray-600 hover:text-blue-600">加入社区</a></li>
+                                <li><a href="#" class="text-gray-600 hover:text-blue-600">合作咨询</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
+                        <p>© <span id="current-year"></span> AI工具实验室. 保留所有权利.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置页脚年份
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // 场景筛选功能
+            const userTypeSelect = document.getElementById('user-type');
+            const categorySelect = document.getElementById('category');
+            const sortSelect = document.getElementById('sort');
+            
+            // 这里可以添加筛选逻辑
+            function applyFilters() {
+                const userType = userTypeSelect.value;
+                const category = categorySelect.value;
+                const sortBy = sortSelect.value;
+                
+                console.log(`应用筛选: 用户类型=${userType}, 分类=${category}, 排序=${sortBy}`);
+                // 在实际应用中，这里应该根据筛选条件更新显示的场景
+            }
+            
+            userTypeSelect.addEventListener('change', applyFilters);
+            categorySelect.addEventListener('change', applyFilters);
+            sortSelect.addEventListener('change', applyFilters);
+        });
+    </script>
+</body>
+</html> 

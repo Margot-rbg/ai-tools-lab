@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI辅助内容创作全流程 - AI工具实验室</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        body {
+            background-color: #f8faff; 
+            background-image: 
+                radial-gradient(circle at 90% 10%, rgba(204, 185, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 10% 90%, rgba(191, 219, 254, 0.4) 0%, transparent 50%);
+            background-attachment: fixed; 
+        }
+        
+        .workflow-step {
+            position: relative;
+        }
+        
+        .workflow-step:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -15px;
+            width: 30px;
+            height: 2px;
+            background-color: #cbd5e1;
+        }
+        
+        @media (max-width: 768px) {
+            .workflow-step:not(:last-child)::after {
+                top: auto;
+                right: 50%;
+                bottom: -15px;
+                width: 2px;
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    <div class="flex h-screen">
+        <div class="flex-grow flex flex-col">
+            <header class="bg-white/80 backdrop-blur-sm shadow-sm p-4 flex justify-between items-center z-10 border-b border-gray-200">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold text-blue-600">AI工具实验室</a>
+                    
+                    <!-- 搜索框 (桌面版) -->
+                    <div class="relative hidden md:block ml-4">
+                        <div class="flex items-center border border-gray-300 rounded-lg bg-white overflow-hidden">
+                            <input type="search" id="search-input" class="block w-full p-2 text-sm text-gray-900 border-0 focus:outline-none focus:ring-0" placeholder="搜索AI工具和场景...">
+                            <button type="submit" class="p-2 text-gray-500 hover:text-blue-600">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden lg:flex items-center space-x-6">
+                    <a href="index.html" class="text-sm text-gray-600 hover:text-blue-600">AI工具集</a>
+                    <a href="scenarios.html" class="text-sm font-semibold text-blue-600">场景解决方案</a>
+                    <a href="news.html" class="text-sm text-gray-600 hover:text-blue-600">AI快讯</a>
+                    <a href="prompts.html" class="text-sm text-gray-600 hover:text-blue-600">提示词库</a>
+                </div>
+                <div class="flex items-center space-x-4 ml-auto">
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600">登录</a>
+                    <a href="submit-tool.html" class="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg">提交工具</a>
+                </div>
+            </header>
+
+            <main class="flex-grow p-4 md:p-8 overflow-y-auto">
+                <!-- 场景页面内容 -->
+                <div class="max-w-7xl mx-auto">
+                    <!-- 场景标题和描述 -->
+                    <div class="mb-8">
+                        <div class="flex flex-wrap items-center mb-4">
+                            <a href="scenarios.html" class="text-sm text-blue-600 hover:underline flex items-center mr-2">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                </svg>
+                                所有场景
+                            </a>
+                            <span class="text-gray-500 mx-2">›</span>
+                            <span class="text-gray-500">内容创作</span>
+                        </div>
+                        <h1 class="text-3xl font-bold text-gray-900">AI辅助内容创作全流程</h1>
+                        <p class="mt-2 text-lg text-gray-600">从构思到成文，利用AI工具高效创作高质量内容，包括文章、博客和社交媒体帖子。</p>
+                        
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">内容创作</span>
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">初学者友好</span>
+                            <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded">高效率</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 工作流程图 -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">工作流程</h2>
+                        <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-4 md:gap-0">
+                            <div class="workflow-step flex flex-col items-center text-center max-w-xs">
+                                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+                                    <span class="text-blue-600 text-xl font-bold">1</span>
+                                </div>
+                                <h3 class="font-medium text-gray-900">主题构思</h3>
+                                <p class="text-sm text-gray-600">使用AI工具生成内容创意和大纲</p>
+                            </div>
+                            
+                            <div class="workflow-step flex flex-col items-center text-center max-w-xs">
+                                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+                                    <span class="text-blue-600 text-xl font-bold">2</span>
+                                </div>
+                                <h3 class="font-medium text-gray-900">内容撰写</h3>
+                                <p class="text-sm text-gray-600">利用AI辅助撰写初稿和扩充内容</p>
+                            </div>
+                            
+                            <div class="workflow-step flex flex-col items-center text-center max-w-xs">
+                                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+                                    <span class="text-blue-600 text-xl font-bold">3</span>
+                                </div>
+                                <h3 class="font-medium text-gray-900">润色优化</h3>
+                                <p class="text-sm text-gray-600">使用AI工具改进文风、语法和结构</p>
+                            </div>
+                            
+                            <div class="workflow-step flex flex-col items-center text-center max-w-xs">
+                                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+                                    <span class="text-blue-600 text-xl font-bold">4</span>
+                                </div>
+                                <h3 class="font-medium text-gray-900">配图与发布</h3>
+                                <p class="text-sm text-gray-600">生成配图并准备发布到各平台</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 推荐工具组合 -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">推荐工具组合</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- 初学者组合 -->
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex items-center mb-3">
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded mr-2">初学者</span>
+                                    <h3 class="text-lg font-medium text-gray-900">入门组合</h3>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-4">适合初学者的工具组合，易于上手且大多提供免费版本。</p>
+                                
+                                <div class="space-y-3">
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0 border border-gray-100 bg-blue-50 flex items-center justify-center">
+                                            <span class="text-blue-600 font-bold">C</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-900">ChatGPT</h4>
+                                            <p class="text-xs text-gray-600">用于主题构思和内容撰写，提供基础创意和文章框架</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0 border border-gray-100 bg-purple-50 flex items-center justify-center">
+                                            <span class="text-purple-600 font-bold">G</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-900">Grammarly</h4>
+                                            <p class="text-xs text-gray-600">用于润色优化，检查语法和拼写错误</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0 border border-gray-100 bg-pink-50 flex items-center justify-center">
+                                            <span class="text-pink-600 font-bold">C</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-900">Canva</h4>
+                                            <p class="text-xs text-gray-600">用于配图设计，提供免费模板和简单编辑功能</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 专业组合 -->
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex items-center mb-3">
+                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded mr-2">专业</span>
+                                    <h3 class="text-lg font-medium text-gray-900">专业组合</h3>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-4">适合专业创作者的高级工具组合，功能更强大但可能需要付费。</p>
+                                
+                                <div class="space-y-3">
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0 border border-gray-100 bg-green-50 flex items-center justify-center">
+                                            <span class="text-green-600 font-bold">C</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-900">Claude</h4>
+                                            <p class="text-xs text-gray-600">用于深度主题研究和高质量内容创作</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0 border border-gray-100 bg-red-50 flex items-center justify-center">
+                                            <span class="text-red-600 font-bold">J</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-900">Jasper</h4>
+                                            <p class="text-xs text-gray-600">专业内容创作平台，提供多种内容模板和SEO优化</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0 border border-gray-100 bg-indigo-50 flex items-center justify-center">
+                                            <span class="text-indigo-600 font-bold">M</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-900">Midjourney</h4>
+                                            <p class="text-xs text-gray-600">生成高质量原创配图，提升内容视觉吸引力</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0 border border-gray-100 bg-yellow-50 flex items-center justify-center">
+                                            <span class="text-yellow-600 font-bold">S</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-900">SurferSEO</h4>
+                                            <p class="text-xs text-gray-600">优化内容SEO表现，提高搜索引擎可见性</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 详细指南 -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">详细指南</h2>
+                        
+                        <div class="prose max-w-none">
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">步骤一：主题构思</h3>
+                            <p class="text-gray-600 mb-3">使用AI工具帮助你发现热门话题、生成创意和规划内容结构。</p>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg my-4">
+                                <h4 class="text-sm font-medium text-gray-900 mb-2">提示词示例</h4>
+                                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto">"我想创建一篇关于[主题]的博客文章。请帮我：
+1. 提供5个吸引人的标题选项
+2. 列出10个相关的子话题或要点
+3. 为这篇文章创建一个详细的大纲
+4. 提供一些可以引用的数据点或统计信息
+5. 推荐一些可以增加文章价值的独特视角"</pre>
+                                <button class="mt-2 text-xs text-blue-600 hover:underline">复制提示词</button>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <h4 class="text-base font-medium text-gray-900 mb-2">关键技巧</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                                    <li>使用AI生成多个创意，然后选择最适合你目标受众的主题</li>
+                                    <li>让AI帮你分析热门话题和搜索趋势</li>
+                                    <li>使用AI创建内容大纲，但确保加入你自己的独特观点</li>
+                                </ul>
+                            </div>
+                            
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">步骤二：内容撰写</h3>
+                            <p class="text-gray-600 mb-3">利用AI工具帮助你撰写初稿，扩展要点，并提供相关信息。</p>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg my-4">
+                                <h4 class="text-sm font-medium text-gray-900 mb-2">提示词示例</h4>
+                                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto">"基于以下大纲，请帮我撰写一篇博客文章的初稿：
+[粘贴你的大纲]
+
+请注意以下几点：
+1. 使用对话式、易于理解的语言
+2. 每个部分应该包含具体的例子或案例
+3. 文章应该有明确的开头、中间和结尾
+4. 针对[目标受众]优化内容
+5. 文章长度约[字数]字"</pre>
+                                <button class="mt-2 text-xs text-blue-600 hover:underline">复制提示词</button>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <h4 class="text-base font-medium text-gray-900 mb-2">关键技巧</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                                    <li>将大纲分成小部分，逐段生成内容以获得更好的质量</li>
+                                    <li>在AI生成的内容中加入你的个人经验和观点</li>
+                                    <li>使用AI扩展关键点，但确保最终内容保持连贯性</li>
+                                </ul>
+                            </div>
+                            
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">步骤三：润色优化</h3>
+                            <p class="text-gray-600 mb-3">使用AI工具改进文章的语法、结构和可读性，使内容更加专业和引人入胜。</p>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg my-4">
+                                <h4 class="text-sm font-medium text-gray-900 mb-2">提示词示例</h4>
+                                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto">"请帮我润色以下文章，提高其可读性和专业性：
+[粘贴你的初稿]
+
+请特别注意：
+1. 改进句子结构和段落过渡
+2. 确保语气一致，适合[目标平台/受众]
+3. 消除冗余和重复
+4. 增加吸引力和说服力
+5. 优化标题和小标题"</pre>
+                                <button class="mt-2 text-xs text-blue-600 hover:underline">复制提示词</button>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <h4 class="text-base font-medium text-gray-900 mb-2">关键技巧</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                                    <li>使用Grammarly等工具检查语法和拼写错误</li>
+                                    <li>让AI帮你改写难以理解或冗长的段落</li>
+                                    <li>使用AI优化文章的SEO表现，但不要过度堆砌关键词</li>
+                                </ul>
+                            </div>
+                            
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">步骤四：配图与发布</h3>
+                            <p class="text-gray-600 mb-3">使用AI生成与内容相关的图像，并准备将内容发布到各种平台。</p>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg my-4">
+                                <h4 class="text-sm font-medium text-gray-900 mb-2">图像生成提示词示例</h4>
+                                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto">"为一篇关于[主题]的博客文章创建一张主题图片。图片应该：
+1. 风格简洁现代
+2. 使用[颜色方案]
+3. 包含[关键元素或符号]
+4. 适合作为社交媒体分享图
+5. 分辨率为1200x630像素"</pre>
+                                <button class="mt-2 text-xs text-blue-600 hover:underline">复制提示词</button>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <h4 class="text-base font-medium text-gray-900 mb-2">关键技巧</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                                    <li>为不同平台创建不同尺寸和样式的图像</li>
+                                    <li>使用AI生成多个图像选项，然后选择最佳匹配</li>
+                                    <li>使用AI帮你为不同社交媒体平台调整内容格式</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </main>
+            
+            <footer class="bg-white border-t border-gray-200 py-6 px-4 md:px-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-900 mb-3">关于我们</h3>
+                            <p class="text-sm text-gray-600">AI工具实验室致力于帮助用户发现、学习和应用最佳AI工具组合，提高工作效率和创造力。</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-900 mb-3">导航</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li><a href="index.html" class="text-gray-600 hover:text-blue-600">首页</a></li>
+                                <li><a href="scenarios.html" class="text-gray-600 hover:text-blue-600">场景解决方案</a></li>
+                                <li><a href="news.html" class="text-gray-600 hover:text-blue-600">AI快讯</a></li>
+                                <li><a href="prompts.html" class="text-gray-600 hover:text-blue-600">提示词库</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-900 mb-3">资源</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li><a href="#" class="text-gray-600 hover:text-blue-600">AI工具使用教程</a></li>
+                                <li><a href="#" class="text-gray-600 hover:text-blue-600">最佳实践指南</a></li>
+                                <li><a href="#" class="text-gray-600 hover:text-blue-600">常见问题</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-900 mb-3">联系我们</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li><a href="#" class="text-gray-600 hover:text-blue-600">提交反馈</a></li>
+                                <li><a href="#" class="text-gray-600 hover:text-blue-600">加入社区</a></li>
+                                <li><a href="#" class="text-gray-600 hover:text-blue-600">合作咨询</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
+                        <p>© <span id="current-year"></span> AI工具实验室. 保留所有权利.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置页脚年份
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply text-gray-800;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+  }
+  
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700;
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-gray-700 border-gray-300 hover:bg-gray-50;
+  }
+}
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 13, 17, 23;
+  --background-end-rgb: 0, 0, 0;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      rgb(var(--background-start-rgb)),
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* 修复可能的布局问题 */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* 确保图片正确显示 */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 修复导航栏在某些浏览器中的显示问题 */
+nav {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 修复z-index问题 */
+.relative {
+  position: relative;
+}
+
+.z-1 {
+  z-index: 1;
+}
+
+/* 确保渐变文字在所有浏览器中正确显示 */
+.bg-gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* 页脚样式 - 移除固定定位 */
+footer {
+  position: relative; /* 确保是相对定位，不是固定定位 */
+  width: 100%;
+  bottom: auto; /* 移除底部固定位置 */
+  left: auto;
+  z-index: 10;
+}
+
+/* 修复移动端视图问题 */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+} 

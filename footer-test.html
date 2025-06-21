@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页脚测试 - AI工具实验室</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        body {
+            background-color: #f8faff; 
+            background-image: 
+                radial-gradient(circle at 90% 10%, rgba(204, 185, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 10% 90%, rgba(191, 219, 254, 0.4) 0%, transparent 50%);
+            background-attachment: fixed; 
+        }
+        
+        /* 页脚样式 - 使用相对定位 */
+        footer {
+            position: relative; /* 确保是相对定位，不是固定定位 */
+            width: 100%;
+            bottom: auto; /* 移除底部固定位置 */
+            left: auto;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    <div class="flex flex-col min-h-screen">
+        <header class="bg-white/80 backdrop-blur-sm shadow-sm p-4 flex justify-between items-center z-10 border-b border-gray-200">
+            <div class="flex items-center">
+                <a href="index.html" class="text-xl font-bold text-blue-600">AI工具实验室</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-sm text-gray-600 hover:text-blue-600">返回首页</a>
+            </div>
+        </header>
+
+        <main class="flex-grow p-4 md:p-8">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-3xl font-bold text-gray-900 mb-6">页脚测试页面</h1>
+                <p class="text-lg text-gray-600 mb-8">这个页面用于测试页脚是否正确跟随页面内容流动，而不是固定在窗口底部。</p>
+                
+                <!-- 生成大量内容，以确保页面需要滚动 -->
+                <div class="space-y-8">
+                    <!-- 测试段落 1-20 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">测试段落 1</h2>
+                        <p class="text-gray-600 mb-4">这是一段测试文本，用于创建足够的内容，以便页面需要滚动。这样我们可以测试页脚是否正确跟随页面内容流动，而不是固定在窗口底部。</p>
+                        <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl.</p>
+                        <p class="text-gray-600">当页面滚动到底部时，页脚应该出现在内容的下方，而不是始终固定在窗口底部。这样可以确保用户能够看到所有内容，包括页脚中的重要信息和链接。</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">测试段落 2</h2>
+                        <p class="text-gray-600 mb-4">这是一段测试文本，用于创建足够的内容，以便页面需要滚动。这样我们可以测试页脚是否正确跟随页面内容流动，而不是固定在窗口底部。</p>
+                        <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl.</p>
+                        <p class="text-gray-600">当页面滚动到底部时，页脚应该出现在内容的下方，而不是始终固定在窗口底部。这样可以确保用户能够看到所有内容，包括页脚中的重要信息和链接。</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">测试段落 3</h2>
+                        <p class="text-gray-600 mb-4">这是一段测试文本，用于创建足够的内容，以便页面需要滚动。这样我们可以测试页脚是否正确跟随页面内容流动，而不是固定在窗口底部。</p>
+                        <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl.</p>
+                        <p class="text-gray-600">当页面滚动到底部时，页脚应该出现在内容的下方，而不是始终固定在窗口底部。这样可以确保用户能够看到所有内容，包括页脚中的重要信息和链接。</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">测试段落 4</h2>
+                        <p class="text-gray-600 mb-4">这是一段测试文本，用于创建足够的内容，以便页面需要滚动。这样我们可以测试页脚是否正确跟随页面内容流动，而不是固定在窗口底部。</p>
+                        <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl.</p>
+                        <p class="text-gray-600">当页面滚动到底部时，页脚应该出现在内容的下方，而不是始终固定在窗口底部。这样可以确保用户能够看到所有内容，包括页脚中的重要信息和链接。</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">测试段落 5</h2>
+                        <p class="text-gray-600 mb-4">这是一段测试文本，用于创建足够的内容，以便页面需要滚动。这样我们可以测试页脚是否正确跟随页面内容流动，而不是固定在窗口底部。</p>
+                        <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl.</p>
+                        <p class="text-gray-600">当页面滚动到底部时，页脚应该出现在内容的下方，而不是始终固定在窗口底部。这样可以确保用户能够看到所有内容，包括页脚中的重要信息和链接。</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">测试段落 6</h2>
+                        <p class="text-gray-600 mb-4">这是一段测试文本，用于创建足够的内容，以便页面需要滚动。这样我们可以测试页脚是否正确跟随页面内容流动，而不是固定在窗口底部。</p>
+                        <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl.</p>
+                        <p class="text-gray-600">当页面滚动到底部时，页脚应该出现在内容的下方，而不是始终固定在窗口底部。这样可以确保用户能够看到所有内容，包括页脚中的重要信息和链接。</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">测试段落 7</h2>
+                        <p class="text-gray-600 mb-4">这是一段测试文本，用于创建足够的内容，以便页面需要滚动。这样我们可以测试页脚是否正确跟随页面内容流动，而不是固定在窗口底部。</p>
+                        <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl.</p>
+                        <p class="text-gray-600">当页面滚动到底部时，页脚应该出现在内容的下方，而不是始终固定在窗口底部。这样可以确保用户能够看到所有内容，包括页脚中的重要信息和链接。</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">测试段落 8</h2>
+                        <p class="text-gray-600 mb-4">这是一段测试文本，用于创建足够的内容，以便页面需要滚动。这样我们可以测试页脚是否正确跟随页面内容流动，而不是固定在窗口底部。</p>
+                        <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl.</p>
+                        <p class="text-gray-600">当页面滚动到底部时，页脚应该出现在内容的下方，而不是始终固定在窗口底部。这样可以确保用户能够看到所有内容，包括页脚中的重要信息和链接。</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- 页脚 - 使用相对定位 -->
+        <footer class="bg-white border-t border-gray-200 py-12" style="position: relative; width: 100%; bottom: auto; left: auto; z-index: 10;">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- 关于我们 -->
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">关于我们</h3>
+                        <p class="text-gray-600">
+                            AI工具实验室致力于帮助用户发现、学习和应用最佳AI工具组合，提高工作效率和创造力。
+                        </p>
+                    </div>
+                    
+                    <!-- 导航 -->
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">导航</h3>
+                        <ul class="space-y-2">
+                            <li><a href="index.html" class="text-gray-600 hover:text-blue-600">首页</a></li>
+                            <li><a href="scenarios.html" class="text-gray-600 hover:text-blue-600">场景解决方案</a></li>
+                            <li><a href="news.html" class="text-gray-600 hover:text-blue-600">AI快讯</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600">提示词库</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 资源 -->
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">资源</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600">AI工具使用教程</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600">最佳实践指南</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600">常见问题</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 联系我们 -->
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">联系我们</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600">提交反馈</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600">加入社区</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600">合作咨询</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 版权信息 -->
+                <div class="mt-12 pt-8 border-t border-gray-200 text-center text-gray-500 text-sm">
+                    <p>&copy; 2025 AI工具实验室. 保留所有权利.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html> 
